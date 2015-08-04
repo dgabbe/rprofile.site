@@ -1,0 +1,75 @@
+# The ROI Rprofile.site file
+#
+# This file creates a basic environment that ROI R programming can run in
+# and be consistent across users.
+#
+# roi.one-time-install-packages.R should be executed to load our common packages.
+#
+# The .Rprofile file is the file users should create/edit for their own
+# setting.
+#
+#
+# History:
+#   03-06-2015: Created by David Gabbe
+
+#
+# Set the options
+#
+# General options
+options(tab.width = 2)
+
+ROIprompt <- function() {
+  # Set the prompt to be a truncated display of the current working directory.
+  promptLen <- c(15)
+  curDir <- getwd()
+  if (nchar(curDir) <= promptLen) {
+    options(prompt=paste(curDir,"> "))
+  } else {
+    options(prompt=paste("...", substring(curDir, nchar(curDir)-15,), "> "))
+  }
+}
+
+
+setwd <- function(...) {
+  #
+  # R can be run in a couple of different ways so it's possible to end up
+  # in a directory you hadn't expected.
+  #
+  # Helpful info from: http://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt
+  #
+  base::setwd(...)
+  ROIprompt()
+}
+
+#
+# Load the packages we typically use.  This is not happening in .First() because of a
+# problem I read about a function name being masked in Stack Overflow.  Use
+# library() because we want a hard failure if the package wasn't installed.
+#
+# The sequence below is ordered!
+#
+library(RColorBrewer, warn.conflicts=TRUE)
+#library(dplyr, warn.conflicts=TRUE)
+#library(lubridate, warn.conflicts=TRUE)
+library(stringr, warn.conflicts=TRUE)
+library(ggplot2, warn.conflicts=TRUE)
+library(scales, warn.conflicts=TRUE)
+#library(VIM, warn.conflicts=TRUE)
+library(sqldf, warn.conflicts=TRUE)
+library(vcd, warn.conflicts=TRUE)
+#library(zoo, warn.conflicts=TRUE)
+#library(xts, warn.conflicts=TRUE)
+#
+# XLConnect & xlsx are fighting over the same object names, haven't decided what
+# to do except, one or the other package should be picked.
+#
+#library(XLConnect, warn.conflicts=TRUE)
+#library(xlsx, warn.conflicts=TRUE)
+
+ROIprompt()
+#
+# See if this works in a scripted file
+#
+cat("\n", format(Sys.Date(), format="%d-%b-%Y"),
+    " Rprofile.site: ROI environment loaded...\n\n")
+
