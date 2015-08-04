@@ -1,9 +1,9 @@
-# The ROI Rprofile.site file
+# The Rprofile.site file
 #
-# This file creates a basic environment that ROI R programming can run in
+# This file creates a basic environment that R programming can run in
 # and be consistent across users.
 #
-# roi.one-time-install-packages.R should be executed to load our common packages.
+# one-time-install-packages.R should be executed to load our common packages.
 #
 # The .Rprofile file is the file users should create/edit for their own
 # setting.
@@ -18,7 +18,13 @@
 # General options
 options(tab.width = 2)
 
-ROIprompt <- function() {
+DGPrompt <- function() {
+  # Set the prompt to be the current working directory w/command starting underneath on a new line.
+  options(prompt=paste(getwd(), ">\n"))
+}
+
+
+DGTruncPrompt <- function() {
   # Set the prompt to be a truncated display of the current working directory.
   promptLen <- c(15)
   curDir <- getwd()
@@ -38,38 +44,14 @@ setwd <- function(...) {
   # Helpful info from: http://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt
   #
   base::setwd(...)
-  ROIprompt()
+  DGPrompt()
 }
 
-#
-# Load the packages we typically use.  This is not happening in .First() because of a
-# problem I read about a function name being masked in Stack Overflow.  Use
-# library() because we want a hard failure if the package wasn't installed.
-#
-# The sequence below is ordered!
-#
-library(RColorBrewer, warn.conflicts=TRUE)
-#library(dplyr, warn.conflicts=TRUE)
-#library(lubridate, warn.conflicts=TRUE)
-library(stringr, warn.conflicts=TRUE)
-library(ggplot2, warn.conflicts=TRUE)
-library(scales, warn.conflicts=TRUE)
-#library(VIM, warn.conflicts=TRUE)
-library(sqldf, warn.conflicts=TRUE)
-library(vcd, warn.conflicts=TRUE)
-#library(zoo, warn.conflicts=TRUE)
-#library(xts, warn.conflicts=TRUE)
-#
-# XLConnect & xlsx are fighting over the same object names, haven't decided what
-# to do except, one or the other package should be picked.
-#
-#library(XLConnect, warn.conflicts=TRUE)
-#library(xlsx, warn.conflicts=TRUE)
+DGPrompt() # Init prompt
 
-ROIprompt()
 #
 # See if this works in a scripted file
 #
 cat("\n", format(Sys.Date(), format="%d-%b-%Y"),
-    " Rprofile.site: ROI environment loaded...\n\n")
+    " Rprofile.site: DG environment loaded...\n\n")
 
