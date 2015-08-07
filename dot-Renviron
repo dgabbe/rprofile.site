@@ -1,0 +1,3 @@
+# Replace the 'dot-' w/a real dot and save in your home directory.
+# Point to your git repository
+R_PROFILE=~/R-programs/_git/r-config/Rprofile.site
