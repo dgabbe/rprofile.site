@@ -3,8 +3,6 @@
 # This file creates a basic environment that R programming can run in
 # and be consistent across users.
 #
-# one-time-install-packages.R should be executed to load our common packages.
-#
 # The .Rprofile file is the file users should create/edit for their own
 # setting.
 #
@@ -12,7 +10,12 @@
 # History:
 #   03-06-2015: Created by David Gabbe
 
-cat("Loading /Library/Frameworks/R.framework/Resources/etc/Rprofile.site\n")
+if (interactive())
+{
+  cat("\n", format(Sys.Date(), format = "%d-%b-%Y"),
+    " Rprofile.site: ", Sys.getenv("R_PROFILE"), " starting...\n\n"
+  )
+}
 
 #
 # Set the options
@@ -35,12 +38,12 @@ DGTruncPrompt <- function() {
   if (nchar(curDir) <= promptLen) {
     options(prompt=paste(curDir,"> "))
   } else {
-    options(prompt=paste("...", substring(curDir, nchar(curDir)-15,), "> "))
+    options(prompt=paste("...", substring(curDir, nchar(curDir)-15), "> "))
   }
 }
 
 
-setwd <- function(...) {
+cd <- function(...) {
   #
   # R can be run in a couple of different ways so it's possible to end up
   # in a directory you hadn't expected.
@@ -51,11 +54,23 @@ setwd <- function(...) {
   DGPrompt()
 }
 
-DGPrompt() # Initial prompt
+pwd <- function(...) {
+  #
+  # R can be run in a couple of different ways so it's possible to end up
+  # in a directory you hadn't expected.
+  #
+  # Helpful info from: http://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt
+  #
+  base::getwd(...)
+  DGPrompt()  # Get back in sync if setwd() is run
+}
 
-#
-# See if this works in a scripted file
-#
-cat("\n", format(Sys.Date(), format="%d-%b-%Y"),
-    " Rprofile.site: DG environment loaded...\n\n")
+
+if (interactive())
+{
+  DGPrompt() # Init prompt
+  cat("\n", format(Sys.Date(), format = "%d-%b-%Y"),
+    " Rprofile.site: ", Sys.getenv("R_PROFILE"), " loaded...\n\n"
+  )
+}
 
