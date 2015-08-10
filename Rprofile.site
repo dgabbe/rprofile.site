@@ -12,14 +12,18 @@
 # History:
 #   03-06-2015: Created by David Gabbe
 
+cat("Loading /Library/Frameworks/R.framework/Resources/etc/Rprofile.site\n")
+
 #
 # Set the options
 #
 # General options
 options(tab.width = 2)
+options(digits=4)
+options(papersize="letter")
 
 DGPrompt <- function() {
-  # Set the prompt to be the current working directory w/command starting underneath on a new line.
+  # Set the prompt to be the current working directory w/command starting underneath on a new line to mirror the behavior by my bash prompt.
   options(prompt=paste(getwd(), ">\n"))
 }
 
@@ -47,7 +51,7 @@ setwd <- function(...) {
   DGPrompt()
 }
 
-DGPrompt() # Init prompt
+DGPrompt() # Initial prompt
 
 #
 # See if this works in a scripted file
