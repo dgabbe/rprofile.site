@@ -18,27 +18,28 @@ if (interactive())
 }
 
 #
-# Set the options
-#
 # General options
+#
 options(tab.width = 2)
 options(digits=4)
 options(papersize="letter")
 
 DGPrompt <- function() {
-  # Set the prompt to be the current working directory w/command starting underneath on a new line to mirror the behavior by my bash prompt.
-  options(prompt=paste(getwd(), ">\n"))
-}
-
-
-DGTruncPrompt <- function() {
-  # Set the prompt to be a truncated display of the current working directory.
+  # Set the prompt to display the current working directory according to personal perferences.
   promptLen <- c(15)
-  curDir <- getwd()
-  if (nchar(curDir) <= promptLen) {
-    options(prompt=paste(curDir,"> "))
+  displayFull <- TRUE
+
+  if (displayFull)
+  {
+    # Set the prompt to be the current working directory w/command starting underneath on a new line to mirror the behavior by my bash prompt.
+    options(prompt = paste(getwd(), ">\n"))
   } else {
-    options(prompt=paste("...", substring(curDir, nchar(curDir)-15), "> "))
+    curDir <- getwd()
+    if (nchar(curDir) <= promptLen) {
+      options(prompt = paste(curDir,"> "))
+    } else {
+      options(prompt = paste("...", substring(curDir, nchar(curDir) - 15), "> "))
+    }
   }
 }
 
