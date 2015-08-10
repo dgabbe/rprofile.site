@@ -36,6 +36,10 @@ options(stringsAsFactors=FALSE) # Correct for now, wonder if/when it will bite m
 #
 
 working_dir_prompt <- function(...) {
+  # There are no arguments because the callback task manager doesn't allow for
+  # optional function arguments. Since you need to add a callback if you want to
+  # change the behavior, it's no different than changing the variables below.
+  #
   # Set the prompt to display the current working directory according to personal perferences.
   fullPath <- TRUE
   promptLen <- c(15)
@@ -76,6 +80,6 @@ if (interactive()) {
   cat(format(Sys.Date(), format = "%d-%b-%Y"),
     " Rprofile.site: ", Sys.getenv("R_PROFILE"), " loaded...\n\n"
   )
-  working_dir_prompt() # Force a top level task in invoke callback
+  working_dir_prompt() # Force a top level task to invoke callback
 }
 
