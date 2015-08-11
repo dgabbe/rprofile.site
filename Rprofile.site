@@ -21,9 +21,9 @@ if (interactive())
 # General options
 #
 options(tab.width = 2)
-options(digits=4)
-options(papersize="letter")
-options(stringsAsFactors=FALSE) # Correct for now, wonder if/when it will bite me.
+options(digits = 4)
+options(papersize ="letter")
+options(stringsAsFactors = FALSE) # Correct for now, wonder if/when it will bite me.
 #
 # RStudio operates a worldwide distribution system so selecting them is a
 # reasonable default.  Also specify https connection.
@@ -32,6 +32,19 @@ local({
   r <- getOption("repos");
   r["CRAN"] <- "https://cran.rstudio.com/"
   options(repos=r)
+})
+#
+# Warning: a hack - waiting for R 3.2.2 to be released to see how the default are set.
+#
+# For the paranoid.  R and RStudio can have different settings for CRAN https connections.  Set to https if unset.
+# Reference: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
+#
+local({
+  if ( is.null(getOption("download.file.method"))) {
+    os_type <- .Platform$OS.type
+    if (os_type == "unix") { options(download.file.method = "libcurl")
+    } else { options(download.file.method = "wininet") }
+  }
 })
 
 #
@@ -86,7 +99,8 @@ pwd <- getwd
 
 
 if (interactive()) {
-  cat("StringsAsFactors option set to", getOption("stringsAsFactors"), "\n")
+  cat("    Option StringsAsFactors set to", getOption("stringsAsFactors"), "\n")
+  cat("    Option download.file.method set to", getOption("download.file.method"), "\n")
   cat(format(Sys.Date(), format = "%d-%b-%Y"),
     " Rprofile.site: ", Sys.getenv("R_PROFILE"), "loaded...\n\n"
   )
