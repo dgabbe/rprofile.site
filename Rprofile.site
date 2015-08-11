@@ -13,7 +13,7 @@
 if (interactive())
 {
   cat(format(Sys.Date(), format = "%d-%b-%Y"),
-    " Rprofile.site: ", Sys.getenv("R_PROFILE"), " starting...\n\n"
+    " Rprofile.site: ", Sys.getenv("R_PROFILE"), "starting...\n\n"
   )
 }
 
@@ -24,6 +24,15 @@ options(tab.width = 2)
 options(digits=4)
 options(papersize="letter")
 options(stringsAsFactors=FALSE) # Correct for now, wonder if/when it will bite me.
+#
+# RStudio operates a worldwide distribution system so selecting them is a
+# reasonable default.  Also specify https connection.
+#
+local({
+  r <- getOption("repos");
+  r["CRAN"] <- "https://cran.rstudio.com/"
+  options(repos=r)
+})
 
 #
 # Emulate bash command line prompt behavior in R console.  RStudio does display
@@ -40,7 +49,7 @@ working_dir_prompt <- function(...) {
   # optional function arguments. Since you need to add a callback if you want to
   # change the behavior, it's no different than changing the variables below.
   #
-  # Set the prompt to display the current working directory according to personal perferences.
+  # Set the prompt to display the current working directory according to personal preferences.
   fullPath <- TRUE
   promptLen <- c(15)
 
@@ -77,8 +86,9 @@ pwd <- getwd
 
 
 if (interactive()) {
+  cat("StringsAsFactors option set to", getOption("stringsAsFactors"), "\n")
   cat(format(Sys.Date(), format = "%d-%b-%Y"),
-    " Rprofile.site: ", Sys.getenv("R_PROFILE"), " loaded...\n\n"
+    " Rprofile.site: ", Sys.getenv("R_PROFILE"), "loaded...\n\n"
   )
   working_dir_prompt() # Force a top level task to invoke callback
 }
