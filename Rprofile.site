@@ -101,7 +101,6 @@ pwd <- getwd
 if (interactive()) {
   cat("    Option StringsAsFactors set to", getOption("stringsAsFactors"), "\n")
   cat("    Option download.file.method set to", getOption("download.file.method"), "\n")
-  cat(format(Sys.Date(), format = "%d-%b-%Y"),
   cat("\n", format(Sys.Date(), format = "%d-%b-%Y"),
     " Rprofile.site: ", Sys.getenv("R_PROFILE"), "loaded...\n\n"
   )
