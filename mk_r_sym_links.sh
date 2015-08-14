@@ -28,5 +28,7 @@ then
 fi
 ln -s "$dir"/Rprofile.site  $rProfileSite
 
+printf "\n    `ls -alF $rEnviron`\n"
+printf "    `ls -alF $rProfileSite`\n"
 printf "\n    Please exit R and RStudio without saving the workspace.\n"
 printf "    Then restart both R and RStudio and check for proper startup.\n\n"
