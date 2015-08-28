@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #
 # Set up your account to have .Renviron and Rprofile.site point to your local git repo.
 # Assume script is run from git local working directory.
