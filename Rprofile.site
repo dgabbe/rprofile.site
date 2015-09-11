@@ -10,6 +10,13 @@
 # History:
 #   03-06-2015: Created by David Gabbe
 
+# ===========================================================
+#
+#     REMINDER: This code is sourced into the base environment.
+#     Be sure not to overwrite any R funtions, etc.
+#
+# ===========================================================
+
 if (interactive())
 {
   cat(format(Sys.Date(), format = "%d-%b-%Y"),
@@ -24,6 +31,12 @@ options(tab.width = 2)
 options(digits = 4)
 options(papersize ="letter")
 options(stringsAsFactors = FALSE) # Correct for now, wonder if/when it will bite me.
+options(defaultPackages = c(getOption("defaultPackages"),
+                            "ggplot2",
+                            "reshape2",
+                            "scales"
+                            )
+        )
 #
 # RStudio operates a worldwide distribution system so selecting them is a
 # reasonable default.  Also specify https connection.
@@ -34,7 +47,7 @@ local({
   options(repos=r)
 })
 #
-# Warning: a hack - waiting for R 3.2.2 to be released to see how the default are set.
+# Warning: a hack - waiting for R 3.2.2 to be released to see how the defaults are set.
 #
 # For the paranoid.  R and RStudio can have different settings for CRAN https connections.  Set to https if unset.
 # Reference: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
@@ -101,6 +114,12 @@ pwd <- getwd
 if (interactive()) {
   cat("    Option StringsAsFactors set to", getOption("stringsAsFactors"), "\n")
   cat("    Option download.file.method set to", getOption("download.file.method"), "\n")
+  cat(strwrap(x=toString(getOption("defaultPackages")), width=80,
+                    initial="    Default Packages: ",
+                    prefix="",
+                    indent=0, exdent=nchar("    Default Packages: ")),
+      sep="\n"
+  )
   cat("\n", format(Sys.Date(), format = "%d-%b-%Y"),
     " Rprofile.site: ", Sys.getenv("R_PROFILE"), "loaded...\n\n"
   )
