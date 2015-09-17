@@ -109,12 +109,20 @@ sink()
 
 cd <- setwd
 pwd <- getwd
+env <- sessionInfo # I always forget sessionInfo
 
+# Not ideal defining in base, will work on improved solution later
+note <- function (text = "Previous command worked"){
+  timestamp(prefix = "<<<<< Notes to myself >>>>>\n",
+            stamp=paste(format(Sys.time(), "%d-%b-%Y (%a) %R @"), getwd(), "\n", text, sep=" "),
+            suffix = "\n<<<<< Notes to myself >>>>>\n",
+            quiet = TRUE)
+}
 
 if (interactive()) {
   cat("    Option StringsAsFactors set to", getOption("stringsAsFactors"), "\n")
   cat("    Option download.file.method set to", getOption("download.file.method"), "\n")
-  cat(strwrap(x=toString(getOption("defaultPackages")), width=80,
+  cat(strwrap(toString(getOption("defaultPackages")), width=80,
                     initial="    Default Packages: ",
                     prefix="",
                     indent=0, exdent=nchar("    Default Packages: ")),
