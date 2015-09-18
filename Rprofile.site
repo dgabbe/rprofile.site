@@ -33,6 +33,7 @@ options(papersize ="letter")
 options(stringsAsFactors = FALSE) # Correct for now, wonder if/when it will bite me.
 options(defaultPackages = c(getOption("defaultPackages"),
                             "ggplot2",
+                            "RColorBrewer",
                             "reshape2",
                             "scales"
                             )
