@@ -110,7 +110,7 @@ sink()
 
 cd <- setwd
 pwd <- getwd
-env <- sessionInfo # I always forget sessionInfo
+env <- utils::sessionInfo # I always forget sessionInfo
 
 # Not ideal defining in base, will work on improved solution later
 note <- function (text = "Previous command worked"){
