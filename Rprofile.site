@@ -1,7 +1,7 @@
 # The Rprofile.site file
 #
 # This file creates a basic environment that R programming can run in
-# and be consistent across users.
+# and be consistent across users and computers.
 #
 # The .Rprofile file is the file users should create/edit for their own
 # preferences.
@@ -31,13 +31,40 @@ options(tab.width = 2)
 options(digits = 4)
 options(papersize ="letter")
 options(stringsAsFactors = FALSE) # Correct for now, wonder if/when it will bite me.
-options(defaultPackages = c(getOption("defaultPackages"),
-                            "ggplot2",
-                            "RColorBrewer",
-                            "reshape2",
-                            "scales"
-                            )
-        )
+#
+# You don't have control over when your Rprofile.site or .Rprofile is executed.
+# For example, devtools::document() will cause execution of this file.  In the
+# RStudio console window, type 'document()', you see this file was executed
+# again, appending to the defaultPackages list.  This is undesirable behavior.
+# And unfortunately it applies to the callback task manager as well.
+#
+# There are a couple of ways to solve this problem.  One is to define a variable
+# in base, similar to how some people solve this problem with bash rc and profile
+# files.  Another is to see if the defaultPackages list contains more then the
+# default set of packages.  Another is to create a new environment to store all
+# code.
+#
+# For the moment, the code will compare the defaultPackages list.  It will fail if
+# someone disables this code or uses only the default packages.  Or if the .Rprofile
+# removes some of the packages. A longer term solution will most likely be creating
+# a new environment and use that as a solid solution and avoid writing to the base
+# environment.
+#
+local({
+  base_packages <- c("base", "methods", "datasets", "utils",
+                        "grDevices", "graphics", "stats")
+
+    my_packages <- c("ggplot2",
+                      "RColorBrewer",
+                      "reshape2",
+                      "scales")
+
+    if (length(getOption("defaultPackages")[!(getOption("defaultPackages") %in% base_packages)]) == 0) {
+    options(defaultPackages = c(getOption("defaultPackages"), my_packages))
+  } else {
+      cat("    Rprofile.site was already executed.  Skipping...\n")
+  }
+})
 #
 # RStudio operates a worldwide distribution system so selecting them is a
 # reasonable default.  Also specify https connection.
@@ -45,7 +72,7 @@ options(defaultPackages = c(getOption("defaultPackages"),
 local({
   r <- getOption("repos");
   r["CRAN"] <- "https://cran.rstudio.com/"
-  options(repos=r)
+  options(repos = r)
 })
 #
 # Warning: a hack - waiting for R 3.2.2 to be released to see how the defaults are set.
@@ -61,16 +88,23 @@ local({
   }
 })
 
-#
-# Emulate bash command line prompt behavior in R console.  RStudio does display
-# the current working directory in the Console window title bar, but it is not
-# where I reflexively look.
-#
-# References:
-#     http://stackoverflow.com/questions/4222476/r-display-a-time-clock-in-the-r-command-line
-#     http://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt
-#
+# Enable tab completion for libary() & require()
+utils::rc.settings(ipck = TRUE)
 
+#Enable tab completion for ?help
+utils::rc.settings(help = TRUE)
+
+#' Emulate bash command line prompt behavior in R console.  RStudio does display
+#'
+#' the current working directory in the Console window title bar, but it is not
+#' where I reflexively look.
+#'
+#' @references
+#'    \url{http://stackoverflow.com/questions/4222476/r-display-a-time-clock-in-the-r-command-line}
+#'    \url{http://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt}
+#
+#' Not ideal defining in base, will work on improved solution later
+#'
 working_dir_prompt <- function(...) {
   # There are no arguments because the callback task manager doesn't allow for
   # optional function arguments. Since you need to add a callback if you want to
@@ -102,20 +136,30 @@ working_dir_prompt <- function(...) {
 #   1. getTaskCallbackNames()
 #   2. Get the Task ID number that matches "working_dir_prompt"
 #   3. removeTaskCallback([id])
-#   4. options(prompt=paste("your string here"))
+#   4. options(prompt = paste("your string here"))
 #
 sink("/dev/null") # suppress output
-  addTaskCallback(working_dir_prompt, data=NULL, name="working_dir_prompt")
+  addTaskCallback(working_dir_prompt, data = NULL, name = "working_dir_prompt")
 sink()
 
+# My fingers are used to typing bash commands so create some equivalents
 cd <- setwd
 pwd <- getwd
 env <- utils::sessionInfo # I always forget sessionInfo
 
-# Not ideal defining in base, will work on improved solution later
+#' Title
+#'
+#' Not ideal defining in base, will work on improved solution later
+#'
+#' @param text
+#'
+#' @return
+#' @export
+#'
+#' @examples
 note <- function (text = "Previous command worked"){
   timestamp(prefix = "<<<<< Notes to myself >>>>>\n",
-            stamp=paste(format(Sys.time(), "%d-%b-%Y (%a) %R @"), getwd(), "\n", text, sep=" "),
+            stamp = paste(format(Sys.time(), "%d-%b-%Y (%a) %R @"), getwd(), "\n", text, sep = " "),
             suffix = "\n<<<<< Notes to myself >>>>>\n",
             quiet = TRUE)
 }
@@ -123,14 +167,15 @@ note <- function (text = "Previous command worked"){
 if (interactive()) {
   cat("    Option StringsAsFactors set to", getOption("stringsAsFactors"), "\n")
   cat("    Option download.file.method set to", getOption("download.file.method"), "\n")
-  cat(strwrap(toString(getOption("defaultPackages")), width=80,
-                    initial="    Default Packages: ",
-                    prefix="",
-                    indent=0, exdent=nchar("    Default Packages: ")),
-      sep="\n"
+  cat("    Option repos set to", getOption("repos"), "\n")
+  cat(strwrap(toString(getOption("defaultPackages")), width = 80,
+                    initial = "    Option defaultPackages: ",
+                    prefix = "",
+                    indent = 0, exdent = nchar("    Option defaultPackages: ")),
+      sep = "\n"
   )
   cat("\n", format(Sys.Date(), format = "%d-%b-%Y"),
-    " Rprofile.site: ", Sys.getenv("R_PROFILE"), "loaded...\n\n"
+    " Rprofile.site: ", Sys.getenv("R_PROFILE"), "finished...\n\n"
   )
   working_dir_prompt() # Force a top level task to invoke callback
 }
