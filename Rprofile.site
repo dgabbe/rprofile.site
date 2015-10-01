@@ -50,6 +50,12 @@ options(stringsAsFactors = FALSE) # Correct for now, wonder if/when it will bite
 # a new environment and use that as a solid solution and avoid writing to the base
 # environment.
 #
+# Reminder: The package search order is in the reverse order of the vector listing
+# the packages being added! From: http://adv-r.had.co.nz/Environments.html#explicit-envs
+# "Each time you load a new package with library() it is inserted between the
+# global environment and the package that was previously at the top of the
+# search path."
+#
 local({
   base_packages <- c("base", "methods", "datasets", "utils",
                         "grDevices", "graphics", "stats")
