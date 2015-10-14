@@ -63,7 +63,8 @@ local({
     my_packages <- c("ggplot2",
                       "RColorBrewer",
                       "reshape2",
-                      "scales")
+                      "scales",
+                      "directlabels")
 
     if (length(getOption("defaultPackages")[!(getOption("defaultPackages") %in% base_packages)]) == 0) {
     options(defaultPackages = c(getOption("defaultPackages"), my_packages))
