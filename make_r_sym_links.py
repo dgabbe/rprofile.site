@@ -3,6 +3,9 @@
 # Set up your account to have .Renviron and Rprofile.site point to your local git repo.
 # Assume script is run from git local working directory.
 #
+# Assume if a link is found, the environment is already setup, but not 
+# necessarily by this repo.
+#
 
 import sys
 import os
@@ -20,11 +23,12 @@ config_files = [
 changesMade = False
 
 for f in config_files:
-	if os.path.islink(f["home"]):
-		print"\n    ", f["home"], " is a sym link. No changes to make."
-	elif os.path.isfile(f["home"]):
+	if os.path.isfile(f["home"]) and not os.path.islink(f["home"]):
 		os.rename(f["home"], f["home"] + ".org")
 		print "\n    Moved ", f["home"], " to ", f["home"], ".org"
+
+	if os.path.islink(f["home"]):
+		print"\n    ", f["home"], " is a sym link. No changes to make."
 	else:
 		os.symlink(os.path.join(dir, f["repo"]), f["home"])
 		changesMade = True
