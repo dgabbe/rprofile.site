@@ -1,24 +1,11 @@
 #
 # .Renviron lives in your home directory.
 #
-# It's purpose is to define environment variables for R in a platform 
+# It's purpose is to define environment variables for R in a platform
 # independent way.
-# 
+#
 # R's startup process is documented at https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html
 #
-# There are different ways to configure your system to use this file.
-#
-# The simplest:
-#   1. copy dot-Renviron to your home directory.
-#   2. rename the file to be .Renviron
-#
-# However if you manage this file w/a version control system, it's tedious manual
-# work and things can get out of sync.
-#
-# The git way:
-#   1. Fork this project to your local system
-#   2. Create a symlink, $HOME/.Renviron to point to <your local git repo>/dot-Renviron
-#   3. Create a symlink, $HOME/Rprofile.site to point to <your local git repo>/Rprofile.site
 #
 
 R_PROFILE=~/Rprofile.site
