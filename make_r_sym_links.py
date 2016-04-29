@@ -14,11 +14,10 @@ home = os.environ["HOME"]
 dir = os.path.dirname(os.path.abspath(sys.argv[0])) # Very simple, may need to revisit
 
 # build a list of all the config files and their corresponding repo names
-config_files = [
+config_files = (
 	{"home": os.path.join(home, ".Renviron"), "repo": "dot-Renviron"},
 	{"home": os.path.join(home, "Rprofile.site"), "repo": "Rprofile.site"},
-	{"home": os.path.join(home, "rconfig"), "repo": "rconfig.r"}
-	]
+	)
 	
 changesMade = False
 

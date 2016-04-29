@@ -1,7 +1,7 @@
 # The Rprofile.site file
 #
-# This file creates a basic environment that R programming can run in
-# and be consistent across users and computers.
+# This file sets the options that R programs run in and be consistent across
+# users and computers.
 #
 # The .Rprofile file is the file users should create/edit for their own
 # preferences.
@@ -27,163 +27,109 @@ if (interactive())
 #
 # General options
 #
-options(tab.width = 2)
-options(digits = 4)
-options(papersize ="letter")
-options(stringsAsFactors = FALSE) # Correct for now, wonder if/when it will bite me.
+# Notes:
+#   Reference: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
 #
-# You don't have control over when your Rprofile.site or .Rprofile is executed.
-# For example, devtools::document() will cause execution of this file.  In the
-# RStudio console window, type 'document()', you see this file was executed
-# again, appending to the defaultPackages list.  This is undesirable behavior.
-# And unfortunately it applies to the callback task manager as well.
+#   After using the 'defaultPackage' option for a year, I recommend not using
+#   this option to load the libraries you commonly use.  With devtools prior to
+#   1.11.1, you can't assume your R session is initialized once when you start
+#   RStudio or R. A vanilla R startup includes these packages "datasets",
+#   "utils", "grDevices", "graphics", "stats", and "methods".  These need to be
+#   included if you add some of your own.  The idiom defaultPackages =
+#   c(getOption("defaultPackages"), "your package") assumes the code is only
+#   executed once which is not guaranteed.
 #
-# There are a couple of ways to solve this problem.  One is to define a variable
-# in base, similar to how some people solve this problem with bash rc and profile
-# files.  Another is to see if the defaultPackages list contains more then the
-# default set of packages.  Another is to create a new environment to store all
-# code.
-#
-# For the moment, the code will compare the defaultPackages list.  It will fail if
-# someone disables this code or uses only the default packages.  Or if the .Rprofile
-# removes some of the packages. A longer term solution will most likely be creating
-# a new environment and use that as a solid solution and avoid writing to the base
-# environment.
-#
-# Reminder: The package search order is in the reverse order of the vector listing
-# the packages being added! From: http://adv-r.had.co.nz/Environments.html#explicit-envs
-# "Each time you load a new package with library() it is inserted between the
-# global environment and the package that was previously at the top of the
-# search path."
-#
-local({
-  base_packages <- c("base", "methods", "datasets", "utils",
-                        "grDevices", "graphics", "stats")
+options(
+  tab.width = 2,
+  digits = 4,
+  papersize = "letter",
+  stringsAsFactors = FALSE, # Correct for now, wonder if/when it will bite me.
+  repos = c(CRAN = "https://cran.rstudio.com/"), # Specify HTTPS connection!
+  browserNLdisabled = TRUE # ignore newlines when browse()ing - Hadley tip
+##  deparse.max.lines = 2 # give minimal output from traceback() - Hadley tip
+)
 
-    my_packages <- c("ggplot2",
-                      "RColorBrewer",
-                      "reshape2",
-                      "scales",
-                      "directlabels")
-
-    if (length(getOption("defaultPackages")[!(getOption("defaultPackages") %in% base_packages)]) == 0) {
-    options(defaultPackages = c(getOption("defaultPackages"), my_packages))
-  } else {
-      cat("    Rprofile.site was already executed.  Skipping...\n")
-  }
-})
 #
-# RStudio operates a worldwide distribution system so selecting them is a
-# reasonable default.  Also specify https connection.
+# R and RStudio can have different settings for CRAN https connections.
+# Explicitly set to HTTPS.
 #
-local({
-  r <- getOption("repos");
-  r["CRAN"] <- "https://cran.rstudio.com/"
-  options(repos = r)
-})
-#
-# Warning: a hack - waiting for R 3.2.2 to be released to see how the defaults are set.
-#
-# For the paranoid.  R and RStudio can have different settings for CRAN https connections.  Set to https if unset.
 # Reference: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
 #
 local({
-  if ( is.null(getOption("download.file.method"))) {
-    os_type <- .Platform$OS.type
-    if (os_type == "unix") { options(download.file.method = "libcurl")
+    if (.Platform$OS.type == "unix") { options(download.file.method = "libcurl")
     } else { options(download.file.method = "wininet") }
-  }
 })
 
-# Enable tab completion for libary() & require()
-utils::rc.settings(ipck = TRUE)
-
-#Enable tab completion for ?help
-utils::rc.settings(help = TRUE)
-
-#' Emulate bash command line prompt behavior in R console.  RStudio does display
-#'
-#' the current working directory in the Console window title bar, but it is not
-#' where I reflexively look.
-#'
-#' @references
-#'    \url{http://stackoverflow.com/questions/4222476/r-display-a-time-clock-in-the-r-command-line}
-#'    \url{http://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt}
-#
-#' Not ideal defining in base, will work on improved solution later
-#'
-working_dir_prompt <- function(...) {
-  # There are no arguments because the callback task manager doesn't allow for
-  # optional function arguments. Since you need to add a callback if you want to
-  # change the behavior, it's no different than changing the variables below.
-  #
-  # Set the prompt to display the current working directory according to personal preferences.
-  fullPath <- TRUE
-  promptLen <- c(15)
-
-  curDir <- getwd()
-  if (fullPath) {
-    # Mirror the behavior by my bash prompt.
-    options(prompt = paste(curDir, ">\n"))
-  } else {
-    if (nchar(curDir) <= promptLen) {
-      options(prompt = paste(curDir,"> "))
-    } else {
-      options(prompt = paste("...", substring(curDir, nchar(curDir) - 15), "> "))
-    }
-  }
-  TRUE
-}
-
-#
-# The code for the task callback is a copy of the function.  The global
-# environment can be cleared and the prompt behavior continues to work.
-#
-# If you don't like how this work, it can be removed by:
-#   1. getTaskCallbackNames()
-#   2. Get the Task ID number that matches "working_dir_prompt"
-#   3. removeTaskCallback([id])
-#   4. options(prompt = paste("your string here"))
-#
-sink("/dev/null") # suppress output
-  addTaskCallback(working_dir_prompt, data = NULL, name = "working_dir_prompt")
-sink()
-
-# My fingers are used to typing bash commands so create some equivalents
-cd <- setwd
-pwd <- getwd
-env <- utils::sessionInfo # I always forget sessionInfo
-
-#' Title
-#'
-#' Not ideal defining in base, will work on improved solution later
-#'
-#' @param text
-#'
-#' @return
-#' @export
-#'
-#' @examples
-note <- function (text = "Previous command worked"){
-  timestamp(prefix = "<<<<< Notes to myself >>>>>\n",
-            stamp = paste(format(Sys.time(), "%d-%b-%Y (%a) %R @"), getwd(), "\n", text, sep = " "),
-            suffix = "\n<<<<< Notes to myself >>>>>\n",
-            quiet = TRUE)
-}
+# R's completion generator
+utils::rc.settings(
+	ipck = TRUE, 	# Enable tab completion for library() & require()
+	help = TRUE		# Enable tab completion for ?help
+	)
 
 if (interactive()) {
-  cat("    Option StringsAsFactors set to", getOption("stringsAsFactors"), "\n")
-  cat("    Option download.file.method set to", getOption("download.file.method"), "\n")
-  cat("    Option repos set to", getOption("repos"), "\n")
-  cat(strwrap(toString(getOption("defaultPackages")), width = 80,
-                    initial = "    Option defaultPackages: ",
-                    prefix = "",
-                    indent = 0, exdent = nchar("    Option defaultPackages: ")),
+  cat("    Option StringsAsFactors:  ", getOption("stringsAsFactors"), "\n")
+  cat("    Option download.file.method:  ", getOption("download.file.method"), "\n")
+  cat("    Option repos:  ", getOption("repos"), "\n")
+  cat(strwrap(toString(getOption("defaultPackages")),
+  			  width = 80,
+       		  initial = "    Option defaultPackages: ",
+        	  prefix = "",
+        	  indent = 0, exdent = nchar("    Option defaultPackages: ")
+        	  ),
       sep = "\n"
   )
   cat("\n", format(Sys.Date(), format = "%d-%b-%Y"),
     " Rprofile.site: ", Sys.getenv("R_PROFILE"), "finished...\n\n"
   )
-  working_dir_prompt() # Force a top level task to invoke callback
 }
 
+# Emulate bash command line prompt behavior in R console.  RStudio does display
+# the current working directory in the Console window title bar, but it is not
+# where I reflexively look.
+#
+# Execute in local context so base environment remains unmodified.
+#
+# The code for the task callback is a copy of the function.  The global
+# environment can be cleared and the prompt behavior continues to work.
+#
+# If you don't like how this work, it can be removed by:
+#   1. removeTaskCallback("wd_prompt")
+#   2. options(prompt=paste("your string here"))
+#
+# References:
+#    \url{http://stackoverflow.com/questions/4222476/r-display-a-time-clock-in-the-r-command-line}
+#    \url{http://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt}
+#
+local({
+  use_wd_prompt <- TRUE # Set to FALSE if you don't want the prompt
+
+  if (use_wd_prompt & interactive() & !"wd_prompt" %in% getTaskCallbackNames()) {
+		wd_prompt <- function(...) {
+			# There are no arguments because the callback task manager doesn't allow for
+			# optional function arguments. Since you need to add a callback if you want to
+			# change the behavior, it's no different than changing the variables below.
+			#
+			# Set the prompt to display the current working directory according to personal preferences.
+			fullPath <- TRUE
+			promptLen <- c(15)
+
+			curDir <- getwd()
+			if (fullPath) {
+				# Mirror the behavior by my bash prompt.
+				options(prompt = paste(curDir, ">\n"))
+			} else {
+				if (nchar(curDir) <= promptLen) {
+					options(prompt = paste(curDir,"> "))
+				} else {
+					options(prompt = paste("...", substring(curDir, nchar(curDir) - 15), "> "))
+				}
+			}
+			TRUE
+		}
+
+		sink("/dev/null") # suppress output
+			addTaskCallback(wd_prompt, data=NULL, name="wd_prompt")
+			wd_prompt() # Init prompt for first time
+		sink()
+  }
+})

@@ -11,3 +11,5 @@ untracked/*
 ehthumbs.db
 Thumbs.db
 .Rproj.user
+Rprofile.site.new.R
+Rprofile.site.org
