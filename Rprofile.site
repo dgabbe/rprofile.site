@@ -60,13 +60,8 @@ local({
 
 # R's completion generator
 utils::rc.settings(
-<<<<<<< HEAD
-  ipck = TRUE, 	# Enable tab completion for library() & require()
-  help = TRUE		# Enable tab completion for ?help
-=======
   ipck = TRUE,   # Enable tab completion for library() & require()
   help = TRUE    # Enable tab completion for ?help
->>>>>>> 4d0fba38787fbe7f03a93c2e599184fc42f2b6dd
   )
 
 if (interactive()) {
@@ -79,12 +74,8 @@ if (interactive()) {
       width = 80,
       initial = "    Option defaultPackages: ",
       prefix = "",
-<<<<<<< HEAD
       indent = 0,
       exdent = nchar("    Option defaultPackages: ")
-=======
-      indent = 0, exdent = nchar("    Option defaultPackages: ")
->>>>>>> 4d0fba38787fbe7f03a93c2e599184fc42f2b6dd
     ),
     sep = "\n"
   )
@@ -118,11 +109,7 @@ local({
       # There are no arguments because the callback task manager doesn't allow for
       # optional function arguments. Since you need to add a callback if you want to
       # change the behavior, it's no different than changing the variables below.
-<<<<<<< HEAD
-      #
-=======
 
->>>>>>> 4d0fba38787fbe7f03a93c2e599184fc42f2b6dd
       # Set the prompt to display the current working directory according to personal preferences.
       fullPath <- TRUE
       promptLen <- c(15)
@@ -142,13 +129,8 @@ local({
     }
 
     sink("/dev/null") # suppress output
-<<<<<<< HEAD
-    addTaskCallback(wd_prompt, data=NULL, name="wd_prompt")
-    wd_prompt() # Init prompt for first time
-=======
       addTaskCallback(wd_prompt, data=NULL, name="wd_prompt")
       wd_prompt() # Init prompt for first time
->>>>>>> 4d0fba38787fbe7f03a93c2e599184fc42f2b6dd
     sink()
   }
 })
