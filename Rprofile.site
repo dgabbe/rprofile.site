@@ -6,9 +6,6 @@
 # The .Rprofile file is the file users should create/edit for their own
 # preferences.
 #
-#
-# History:
-#   03-06-2015: Created by David Gabbe
 
 # ===========================================================
 #
@@ -31,13 +28,13 @@ if (interactive())
 #   Reference: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
 #
 #   After using the 'defaultPackage' option for a year, I recommend not using
-#   this option to load the libraries you commonly use.  With devtools prior to
-#   1.11.1, you can't assume your R session is initialized once when you start
-#   RStudio or R. A vanilla R startup includes these packages "datasets",
-#   "utils", "grDevices", "graphics", "stats", and "methods".  These need to be
-#   included if you add some of your own.  The idiom defaultPackages =
+#   this option to load the libraries you commonly use.  A vanilla R startup includes
+#   these packages "datasets", "utils", "grDevices", "graphics", "stats", and "methods".
+#   These need to be included if you add some of your own.  The idiom defaultPackages =
 #   c(getOption("defaultPackages"), "your package") assumes the code is only
-#   executed once which is not guaranteed.
+#   executed once which is not guaranteed.  RStudio executing the devtools functions cause
+#   the R session initialization code to run.  "your package" is appended again to the
+#   default package list and callbacks are added again to the task callback manager.
 #
 options(
   tab.width = 2,
@@ -45,6 +42,7 @@ options(
   papersize = "letter",
   stringsAsFactors = FALSE, # Correct for now, wonder if/when it will bite me.
   repos = c(CRAN = "https://cran.rstudio.com/"), # Specify HTTPS connection!
+  formatR.indent = 2,
   browserNLdisabled = TRUE # ignore newlines when browse()ing - Hadley tip
 ##  deparse.max.lines = 2 # give minimal output from traceback() - Hadley tip
 )
@@ -62,21 +60,23 @@ local({
 
 # R's completion generator
 utils::rc.settings(
-	ipck = TRUE, 	# Enable tab completion for library() & require()
-	help = TRUE		# Enable tab completion for ?help
-	)
+  ipck = TRUE,   # Enable tab completion for library() & require()
+  help = TRUE    # Enable tab completion for ?help
+  )
 
 if (interactive()) {
   cat("    Option StringsAsFactors:  ", getOption("stringsAsFactors"), "\n")
   cat("    Option download.file.method:  ", getOption("download.file.method"), "\n")
   cat("    Option repos:  ", getOption("repos"), "\n")
-  cat(strwrap(toString(getOption("defaultPackages")),
-  			  width = 80,
-       		  initial = "    Option defaultPackages: ",
-        	  prefix = "",
-        	  indent = 0, exdent = nchar("    Option defaultPackages: ")
-        	  ),
-      sep = "\n"
+  cat(
+    strwrap(
+      toString(getOption("defaultPackages")),
+      width = 80,
+      initial = "    Option defaultPackages: ",
+      prefix = "",
+      indent = 0, exdent = nchar("    Option defaultPackages: ")
+    ),
+    sep = "\n"
   )
   cat("\n", format(Sys.Date(), format = "%d-%b-%Y"),
     " Rprofile.site: ", Sys.getenv("R_PROFILE"), "finished...\n\n"
@@ -104,32 +104,32 @@ local({
   use_wd_prompt <- TRUE # Set to FALSE if you don't want the prompt
 
   if (use_wd_prompt & interactive() & !"wd_prompt" %in% getTaskCallbackNames()) {
-		wd_prompt <- function(...) {
-			# There are no arguments because the callback task manager doesn't allow for
-			# optional function arguments. Since you need to add a callback if you want to
-			# change the behavior, it's no different than changing the variables below.
-			#
-			# Set the prompt to display the current working directory according to personal preferences.
-			fullPath <- TRUE
-			promptLen <- c(15)
+    wd_prompt <- function(...) {
+      # There are no arguments because the callback task manager doesn't allow for
+      # optional function arguments. Since you need to add a callback if you want to
+      # change the behavior, it's no different than changing the variables below.
 
-			curDir <- getwd()
-			if (fullPath) {
-				# Mirror the behavior by my bash prompt.
-				options(prompt = paste(curDir, ">\n"))
-			} else {
-				if (nchar(curDir) <= promptLen) {
-					options(prompt = paste(curDir,"> "))
-				} else {
-					options(prompt = paste("...", substring(curDir, nchar(curDir) - 15), "> "))
-				}
-			}
-			TRUE
-		}
+      # Set the prompt to display the current working directory according to personal preferences.
+      fullPath <- TRUE
+      promptLen <- c(15)
 
-		sink("/dev/null") # suppress output
-			addTaskCallback(wd_prompt, data=NULL, name="wd_prompt")
-			wd_prompt() # Init prompt for first time
-		sink()
+      curDir <- getwd()
+      if (fullPath) {
+        # Mirror the behavior by my bash prompt.
+        options(prompt = paste(curDir, ">\n"))
+      } else {
+        if (nchar(curDir) <= promptLen) {
+          options(prompt = paste(curDir,"> "))
+        } else {
+          options(prompt = paste("...", substring(curDir, nchar(curDir) - 15), "> "))
+        }
+      }
+      TRUE
+    }
+
+    sink("/dev/null") # suppress output
+      addTaskCallback(wd_prompt, data=NULL, name="wd_prompt")
+      wd_prompt() # Init prompt for first time
+    sink()
   }
 })
