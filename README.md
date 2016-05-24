@@ -1,7 +1,13 @@
 # rprofile.site
-### Purpose and Installation
+### Purpose and Features
 
-The purpose of this project is to customize your R environment for R scripts and R GUIs (RStudio) independently of your .bash files while keeping the files under source code control. You can easily maintain the same environment across multiple computers. The user profile, `.Rprofile`, is left available to use in your `$HOME` directory or your project's working directory. 
+The purpose of this project is to customize your R environment for R scripts and R GUIs (RStudio) independently of your .bash files while keeping the files under source code control. You can easily maintain the same environment across multiple computers. The user profile, `.Rprofile`, is left available to use in your `$HOME` directory or your project's working directory.
+
+Review and edit `Rprofile.site` to set R's options to your preferences.
+
+R's default prompt of `> ` is replaced with the string returned by `getwd()`. If you prefer the default prompt, set `use_wd_prompt` to `FALSE`. The prompt is autmatically updated the working directory is changed.  In RStudio, the ending `\n` is eaten.  In R (tested on OS X), it is honored.
+
+### Installation
 
 Follow these steps to install:
 ```
