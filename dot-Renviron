@@ -9,3 +9,4 @@
 #
 
 R_PROFILE=~/Rprofile.site
+R_LIBS_USER=~/Library/R/3.x/
