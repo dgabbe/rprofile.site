@@ -25,8 +25,6 @@ If there is an existing `Rprofile.site`, it is renamed to `Rprofile.site.org`. N
     Option StringsAsFactors:   FALSE 
     Option download.file.method:   libcurl 
     Option repos:   https://cran.rstudio.com/ 
-    Option defaultPackages: datasets, utils, grDevices, graphics, stats,
-                            methods
 
  13-May-2016  Rprofile.site:  ~/Rprofile.site finished...
 ```
