@@ -5,7 +5,7 @@ The purpose of this project is to customize your R environment for R scripts and
 
 Review and edit `Rprofile.site` to set R's options to your preferences.
 
-R's default prompt of `> ` is replaced with the string returned by `getwd()`. If you prefer the default prompt, set `use_wd_prompt` to `FALSE`. The prompt is autmatically updated the working directory is changed.  In RStudio, the ending `\n` is eaten.  In R (tested on OS X), it is honored.
+R's default prompt of `> ` is replaced with the string returned by `getwd()`. If you prefer the default prompt, set `use_wd_prompt` to `FALSE`. The prompt is autmatically updated as the working directory is changed.  In RStudio, the ending `\n` is eaten.  In R (tested on OS X), it is honored.
 
 ### Installation
 
