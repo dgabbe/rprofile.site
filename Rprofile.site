@@ -1,8 +1,5 @@
 # The Rprofile.site file
 #
-# This file sets the options that R programs run in and be consistent across
-# users and computers.
-#
 # The .Rprofile file is the file users should create/edit for their own
 # preferences.
 #
@@ -25,8 +22,6 @@ if (interactive())
 # General options
 #
 # Notes:
-#   Reference: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
-#
 #   After using the 'defaultPackage' option for a year, I recommend not using
 #   this option to load the libraries you commonly use.  A vanilla R startup includes
 #   these packages "datasets", "utils", "grDevices", "graphics", "stats", and "methods".
@@ -51,7 +46,7 @@ options(
 # R and RStudio can have different settings for CRAN https connections.
 # Explicitly set to HTTPS.
 #
-# Reference: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
+# References: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
 #
 local({
     if (.Platform$OS.type == "unix") { options(download.file.method = "libcurl")
@@ -61,8 +56,24 @@ local({
 # R's completion generator
 utils::rc.settings(
   ipck = TRUE,   # Enable tab completion for library() & require()
-  help = TRUE    # Enable tab completion for ?help
+  help = TRUE,   # Enable tab completion for ?help
+  data = TRUE    # Enable tab completion for data sets inside utils::data()
   )
+
+#
+# Use require() instead of library() because initialization code should never
+# fail due to personal preference.
+#
+# Constantly loading devtools. Decided to make them available for interactive work.
+#
+# dgutil contains ggplot themes so always attach if package was installed.
+#
+# References: http://yihui.name/en/2014/07/library-vs-require/
+#
+.First <- function() {
+  if (interactive()) { require("devtools", quietly = TRUE)}
+  require("dgutil", quietly = TRUE)
+}
 
 if (interactive()) {
   cat("    Option StringsAsFactors:  ", getOption("stringsAsFactors"), "\n")
@@ -75,7 +86,7 @@ if (interactive()) {
       initial = "    Option defaultPackages: ",
       prefix = "",
       indent = 0,
-      exdent = nchar("    Option defaultPackages: ")
+      exdent = nchar("        ")
     ),
     sep = "\n"
   )
@@ -83,6 +94,7 @@ if (interactive()) {
     " Rprofile.site: ", Sys.getenv("R_PROFILE"), "finished...\n\n"
   )
 }
+
 
 # Emulate bash command line prompt behavior in R console.  RStudio does display
 # the current working directory in the Console window title bar, but it is not
@@ -98,8 +110,8 @@ if (interactive()) {
 #   2. options(prompt=paste("your string here"))
 #
 # References:
-#    \url{http://stackoverflow.com/questions/4222476/r-display-a-time-clock-in-the-r-command-line}
-#    \url{http://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt}
+#    - https://stackoverflow.com/questions/4222476/r-display-a-time-clock-in-the-r-command-line
+#    - https://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt
 #
 local({
   use_wd_prompt <- TRUE # Set to FALSE if you don't want the prompt
@@ -134,3 +146,4 @@ local({
     sink()
   }
 })
+
