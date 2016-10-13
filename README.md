@@ -7,6 +7,11 @@ Review and edit `Rprofile.site` to set R's options to your preferences.
 
 R's default prompt of `> ` is replaced with the string returned by `getwd()`. If you prefer the default prompt, set `use_wd_prompt` to `FALSE`. The prompt is autmatically updated as the working directory is changed.  In RStudio, the ending `\n` is eaten.  In R (tested on OS X), it is honored.
 
+#### [13-Oct-2016] New in https://github.com/dgabbe/rprofile.site/commit/fc9527e31c365bb7add527c1eb06b22d64977c55
+* Added .First() to attach `devtools` package if running interactively and already installed. 
+Attach `dgutil` package if installed.
+
+
 ### Installation
 
 Follow these steps to install:
@@ -20,13 +25,15 @@ git clone https://github.com/dgabbe/rprofile.site.git
 
 If there is an existing `Rprofile.site`, it is renamed to `Rprofile.site.org`. Now edit `Rprofile.site` to make sure it has the options set to your preferences.  Startup R or RStudio to verify a message like the one below is displayed:
 ```
-13-May-2016  Rprofile.site:  ~/Rprofile.site starting...
+13-Oct-2016  Rprofile.site:  ~/Rprofile.site starting...
 
     Option StringsAsFactors:   FALSE 
     Option download.file.method:   libcurl 
     Option repos:   https://cran.rstudio.com/ 
+    Option defaultPackages: datasets, utils, grDevices, graphics, stats,
+        methods
 
- 13-May-2016  Rprofile.site:  ~/Rprofile.site finished...
+ 13-Oct-2016  Rprofile.site:  ~/Rprofile.site finished...
 ```
 
  If you want to remove this setup:
