@@ -6,7 +6,5 @@
 #
 # R's startup process is documented at https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html
 #
-#
-
 R_PROFILE=~/Rprofile.site
 R_LIBS_USER=~/Library/R/3.x/library/

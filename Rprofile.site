@@ -69,55 +69,17 @@
   #
   # Load commonly used packages
   #
-  if (interactive()) { require("devtools", quietly = TRUE)}
-  require("dgutil", quietly = TRUE)
+  if (interactive()) {
+    suppressMessages(require("devtools", quietly = TRUE))
+  }
+  suppressMessages(require("dgutil", quietly = TRUE))
 
-  #
-  # Emulate bash command line prompt behavior in R console.  RStudio does display
-  # the current working directory in the Console window title bar, but it is not
-  # where I reflexively look.
-  #
-  # The code for the task callback is a copy of the function.  The global
-  # environment can be cleared and the prompt behavior continues to work.
-  #
-  # If you don't like how this work, it can be removed by:
-  #   1. removeTaskCallback("wd_prompt")
-  #   2. options(prompt=paste("your string here"))
-  #
-  # References:
-  #    - https://stackoverflow.com/questions/4222476/r-display-a-time-clock-in-the-r-command-line
-  #    - https://stackoverflow.com/questions/25136059/how-to-show-working-directory-in-r-prompt
-  #
-  use_wd_prompt <- TRUE # Set to FALSE if you don't want the prompt
-
-  if (use_wd_prompt & interactive() & !"wd_prompt" %in% getTaskCallbackNames()) {
-    wd_prompt <- function(...) {
-      # There are no arguments because the callback task manager doesn't allow for
-      # optional function arguments. Since you need to add a callback if you want to
-      # change the behavior, it's no different than changing the variables below.
-
-      # Set the prompt to display the current working directory according to personal preferences.
-      fullPath <- TRUE
-      promptLen <- c(15)
-
-      curDir <- getwd()
-      if (fullPath) {
-        # Mirror the behavior by my bash prompt.
-        options(prompt = paste(curDir, "> \n"))
-      } else {
-        if (nchar(curDir) <= promptLen) {
-          options(prompt = paste(curDir,"> "))
-        } else {
-          options(prompt = paste("...", substring(curDir, nchar(curDir) - 15), "> "))
-        }
-      }
-      TRUE
-    }
-
-    sink("/dev/null") # suppress output
-    addTaskCallback(wd_prompt, data=NULL, name="wd_prompt")
-    wd_prompt() # Init prompt for first time
-    sink()
+  # Set wdprompt.enabled = FALSE if you want to turn off the prompt.
+  if ( length(find.package("wdprompt", quiet = TRUE)) != 0 ) {
+    require("wdprompt", quietly = TRUE)
+    wdprompt::init_wd()
+    wdprompt::start_wd()
+#    wdprompt::wd_prompt()
   }
 
   #
@@ -139,10 +101,10 @@
       sep = "\n"
     )
 
-    cat("\n    devtools.name:  ", getOption("devtools.name"), "\n", sep = "")
-    cat("    devtools.desc.author:  ", getOption("devtools.desc.author"), "\n", sep = "")
-    cat("    devtools.desc.license  :", getOption("devtools.desc.license"), "\n", sep = "")
-    cat("    devtools.desc:  ", getOption("devtools.desc"), "\n", sep = "")
+    cat("\n    Option devtools.name:  ", getOption("devtools.name"), "\n", sep = "")
+    cat("    Option devtools.desc.author:  ", getOption("devtools.desc.author"), "\n", sep = "")
+    cat("    Option devtools.desc.license:  ", getOption("devtools.desc.license"), "\n", sep = "")
+    cat("    Option devtools.desc:  ", getOption("devtools.desc"), "\n", sep = "")
 
     cat("\n", format(Sys.Date(), format = "%d-%b-%Y"), " ",
         Sys.getenv("R_PROFILE"), " .First() finished...\n\n",
