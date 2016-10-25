@@ -12,30 +12,26 @@
 # ===========================================================
 
 # Notes:
-#   After using the 'defaultPackage' option for a year, I recommend not using
-#   this option to load the libraries you commonly use.  A vanilla R startup includes
+#   After using the 'defaultPackage' option for a year, I decided not to use
+#   this option to load my commonly used libraries.  A vanilla R startup includes
 #   these packages "datasets", "utils", "grDevices", "graphics", "stats", and "methods".
 #   These need to be included if you add some of your own.  The idiom defaultPackages =
 #   c(getOption("defaultPackages"), "your package") assumes the code is only
 #   executed once which is not guaranteed.  RStudio executing the devtools functions cause
 #   the R session initialization code to run.  "your package" is appended again to the
-#   default package list and callbacks are added again to the task callback manager.
+#   default package list (and callbacks are added again to the task callback manager).
+#   While R only attaches the package once, it's still sloppy code.
 #
 #   Use require() instead of library() because initialization code should never
 #   fail due to personal preference.
 #
-#   Constantly loading devtools. Decided to make them available for interactive work.
-#   dgutil contains ggplot themes so always attach if package was installed.
-#
 # References: http://yihui.name/en/2014/07/library-vs-require/
 #
 .First <- function() {
-  if (interactive())
-  {
-    cat(format(Sys.Date(), format = "%d-%b-%Y"),
-        Sys.getenv("R_PROFILE"), ".First() starting...\n\n"
-    )
-  }
+  message_prefix <- paste(format(Sys.Date(), format = "%d-%b-%Y"), " ", Sys.getenv("R_PROFILE"))
+
+  if (interactive()) { message(message_prefix, " .First() starting...\n") }
+
   #
   # General options
   #
@@ -59,7 +55,9 @@
   if (.Platform$OS.type == "unix") { options(download.file.method = "libcurl")
   } else { options(download.file.method = "wininet") }
 
+  #
   # R's completion generator
+  #
   utils::rc.settings(
     ipck = TRUE,   # Enable tab completion for library() & require()
     help = TRUE,   # Enable tab completion for ?help
@@ -74,42 +72,36 @@
   }
   suppressMessages(require("dgutil", quietly = TRUE))
 
-  # Set wdprompt.enabled = FALSE if you want to turn off the prompt.
+  #
+  # wdprompt::stop_wd() if you want to turn off the prompt.
+  #
   if ( length(find.package("wdprompt", quiet = TRUE)) != 0 ) {
-    require("wdprompt", quietly = TRUE)
     wdprompt::init_wd()
     wdprompt::start_wd()
-#    wdprompt::wd_prompt()
   }
 
   #
   # Options summary
   #
   if (interactive()) {
-    cat("    Option StringsAsFactors:  ", getOption("stringsAsFactors"), "\n", sep = "")
-    cat("    Option download.file.method:  ", getOption("download.file.method"), "\n", sep = "")
-    cat("    Option repos:  ", getOption("repos"), "\n", sep = "")
-    cat(
-      strwrap(
-        toString(getOption("defaultPackages")),
-        width = 80,
-        initial = "    Option defaultPackages:  ",
-        prefix = "",
-        indent = 0,
-        exdent = nchar("        ")
-      ),
-      sep = "\n"
+    lapply(
+      list("stringsAsFactors", "download.file.method", "repos", "defaultPackages"),
+      function(o) {
+        message(
+          strwrap(
+            toString(getOption(o)),
+            width = 80,
+            initial = paste("    Option ", o, ":  ", sep = ""),
+            prefix = "\n",
+            indent = 0,
+            exdent = nchar("        ")
+          )
+        )
+      }
     )
 
-    cat("\n    Option devtools.name:  ", getOption("devtools.name"), "\n", sep = "")
-    cat("    Option devtools.desc.author:  ", getOption("devtools.desc.author"), "\n", sep = "")
-    cat("    Option devtools.desc.license:  ", getOption("devtools.desc.license"), "\n", sep = "")
-    cat("    Option devtools.desc:  ", getOption("devtools.desc"), "\n", sep = "")
 
-    cat("\n", format(Sys.Date(), format = "%d-%b-%Y"), " ",
-        Sys.getenv("R_PROFILE"), " .First() finished...\n\n",
-        sep = ""
-    )
+    message("\n", message_prefix, " .First() finished...\n")
   }
 }
 
