@@ -85,8 +85,8 @@ once, there is no change to your environment, but it's poor technique.
 If you still want default packages loaded, try this:
 ```
 .First <- function() {
-  require("package1", quietly = TRUE)
-  require("package2", quietly = TRUE)
+  suppressMessages(require("package1", quietly = TRUE))
+  suppressMessages(require("package2", quietly = TRUE))
 }
 
 ```
