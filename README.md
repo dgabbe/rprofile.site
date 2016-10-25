@@ -9,7 +9,7 @@ multiple computers. The user profile, `.Rprofile`, is left available to use in
 your `$HOME` directory or your project's working directory.
 
 Review and edit `Rprofile.site` to set R's options to your preferences.  Jump to
-the [Installation][install].
+the [Installation](#installation).
 
 #### [13-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/fc9527e31c365bb7add527c1eb06b22d64977c55) Changes
 * Added .First() to attach `devtools` package if installed and running interactively. 
@@ -27,7 +27,7 @@ shouldn't be cluttering up an initialization file.  Started if it's installed.
 
 ### Installation
 
-[install]: Follow these steps to install:
+Follow these steps to install:
 ```
 mkdir ~/rprofile.site
 cd ~/rprofile.site
