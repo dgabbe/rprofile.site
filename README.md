@@ -13,7 +13,7 @@ the [Installation](#installation).
 
 #### [13-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/fc9527e31c365bb7add527c1eb06b22d64977c55) Changes
 * Added .First() to attach `devtools` package if installed and running interactively. 
-* Attach `dgutil` package if installed.
+* Attach `dgutils` package if installed.
 
 #### [25-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/c57cadcb14c5ec8eeecb0664fa2c304687860790) Changes
 This release represents a refactoring of the code.  The use of `local()`, suggests that R's lexical scoping rules
