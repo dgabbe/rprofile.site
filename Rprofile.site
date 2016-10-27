@@ -70,7 +70,7 @@
   if (interactive()) {
     suppressMessages(require("devtools", quietly = TRUE))
   }
-  suppressMessages(require("dgutil", quietly = TRUE))
+  suppressMessages(require("dgutils", quietly = TRUE))
 
   #
   # wdprompt::stop_wd() if you want to turn off the prompt.
@@ -99,7 +99,6 @@
         )
       }
     )
-
 
     message("\n", message_prefix, " .First() finished...\n")
   }
