@@ -2,7 +2,7 @@
 
 ### Purpose and Features
 
-The purpose of this project is to customize your R environment for R scripts and
+Customize your R environment for R scripts and
 R GUIs (RStudio) independently of your .bash files while keeping the files under
 source code control. You can easily maintain the same environment across
 multiple computers. The user profile, `.Rprofile`, is left available to use in
