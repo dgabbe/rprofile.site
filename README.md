@@ -8,22 +8,24 @@ source code control. You can easily maintain the same environment across
 multiple computers. The user profile, `.Rprofile`, is left available to use in
 your `$HOME` directory or your project's working directory.
 
-Review and edit `Rprofile.site` to set R's options to your preferences.  Jump to
+Review and edit `.First()` in `Rprofile.site` to set R's options to your preferences.  Jump to
 the [Installation](#installation).
 
 #### [13-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/fc9527e31c365bb7add527c1eb06b22d64977c55) Changes
 * Added .First() to attach `devtools` package if installed and running interactively. 
+* Attach `devtools` package if installed and interactive.
 * Attach `dgutils` package if installed.
 
 #### [25-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/c57cadcb14c5ec8eeecb0664fa2c304687860790) Changes
-This release represents a refactoring of the code.  The use of `local()`, suggests that R's lexical scoping rules
-are being twisted and bent.  The purpose is to prevent the `base` environment from being modified, but that's 
-`.First`'s purpose.  All code moved into `.First`.
-
-Session details now displayed using message() for better control.
-
-The bash prompt code was moved to the [wdprompt](https://github.com/dgabbe/wdprompt/) package.  It's optional and really 
-shouldn't be cluttering up an initialization file.  Started if it's installed.
+* This release represents a refactoring of the code.  The use of `local()`,
+suggests that R's lexical scoping rules are being twisted and bent.  The purpose
+is to prevent the `base` environment from being modified, but that's `.First`'s
+purpose.  All code moved into `.First`.
+* Session details now displayed using message() for better control.
+* The bash prompt code was moved to the
+[wdprompt](https://github.com/dgabbe/wdprompt/) package.  It's optional and
+really shouldn't be cluttering up an initialization file.  Started if it's
+installed.
 
 ### Installation
 
