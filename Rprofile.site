@@ -29,7 +29,6 @@
 #
 .First <- function() {
   message_prefix <- paste(format(Sys.Date(), format = "%d-%b-%Y"), " ", Sys.getenv("R_PROFILE"))
-
   if (interactive()) { message(message_prefix, " .First() starting...\n") }
 
   #
@@ -70,15 +69,14 @@
   if (interactive()) {
     suppressMessages(require("devtools", quietly = TRUE))
   }
-  suppressMessages(require("dgutils", quietly = TRUE))
 
   #
   # wdprompt::stop_wd() if you want to turn off the prompt.
   #
   if ( length(find.package("wdprompt", quiet = TRUE)) != 0 ) {
-    wdprompt::init_wd()
     wdprompt::start_wd()
   }
+  suppressMessages(require("dgutils", quietly = TRUE))
 
   #
   # Options summary
