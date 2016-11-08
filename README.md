@@ -2,14 +2,14 @@
 
 ### Purpose and Features
 
-Customize your R environment for R scripts and
-R GUIs (RStudio) independently of your .bash files while keeping the files under
-source code control. You can easily maintain the same environment across
-multiple computers. The user profile, `.Rprofile`, is left available to use in
-your `$HOME` directory or your project's working directory.
+Customize your R environment for R scripts and R GUIs (RStudio) independently of
+your .bash files while keeping the files under source code control. You can
+easily maintain the same environment across multiple computers. The user
+profile, `.Rprofile`, is left available to use in your `$HOME` directory or your
+project's working directory.
 
-Review and edit `.First()` in `Rprofile.site` to set R's options to your preferences.  Jump to
-the [Installation](#installation).
+Review and edit `.First()` in `Rprofile.site` to set R's options to your
+preferences.  Jump to the [Installation](#installation).
 
 #### [13-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/fc9527e31c365bb7add527c1eb06b22d64977c55) Changes
 * Added .First() to attach `devtools` package if installed and running interactively. 
@@ -26,6 +26,9 @@ purpose.  All code moved into `.First`.
 [wdprompt](https://github.com/dgabbe/wdprompt/) package.  It's optional and
 really shouldn't be cluttering up an initialization file.  Started if it's
 installed.
+
+#### [7-Nov-2016](https://github.com/dgabbe/rprofile.site/commita3f13423db26f767d7010652e04953af4a69bb8f) Changes
+* `init_wd()` now no longer required before `start_wd()`.
 
 ### Installation
 
@@ -91,22 +94,20 @@ If you still want default packages loaded, try this:
   suppressMessages(require("package1", quietly = TRUE))
   suppressMessages(require("package2", quietly = TRUE))
 }
-
 ```
 If you use `library()`, instead of `require()`, any error will stop the initialization 
 process.  It should take more than a missing package to bring the initialization
 to a halt.
 
-R's package facility provides a great solution. 
-Writing a package will make you a better R programer, your code will have
-fewer collisions with other R code, and RStudio's deployment features will manage
-the packages needed.  
+R's package facility provides a great solution. Writing a package will make you
+a better R programer, your code will have fewer collisions with other R code,
+and RStudio's deployment features will manage the packages needed.
 
-Remember, loading is different from attaching packages.  Once a
-package is *installed*, `install.packages()`, its functions can be called with
+Remember, loading is different from attaching packages.  Once a package is
+*installed*, `install.packages()`, its functions can be called with 
 `package::function()` syntax.  The `library` function will attach the package to
 the current evironment and make it part of the namespaces that are searched.
 
 ### More on OS X Setup Details
 
-Probably under the heading of TL;DC are the [notes](http://dgabbe.github.io/rprofile.site) I kept as I built out an R development environment on Yosemite, OS X 10.10.x and continuing on OS X 10.11, El Capitan.  They will be edited as soon as I straighten out some brew issues;
+Probably under the heading of TL;DC are the [notes](http://blog.frame38.com/rprofile.site/) I kept as I built out an R development environment on Yosemite, OS X 10.10.x and continuing on OS X 10.11, El Capitan.  They will be edited as soon as I straighten out some brew issues;
