@@ -8,11 +8,15 @@ easily maintain the same environment across multiple computers. The user
 profile, `.Rprofile`, is left available to use in your `$HOME` directory or your
 project's working directory.
 
-Review and edit `.First()` in `Rprofile.site` to set R's options to your
-preferences.  Jump to the [Installation](#installation).
+Review and edit `.First()` in `Rprofile.site` and `.Renviron` to set R's options to your
+preferences.
+
+To save disk space and prevent reinstalling libraries when a new version of R is installed, the major versions use the same library, i.e.`~/Library/R/3.x/library/`, which is defined by `R_LIBS_USER`.
+
+Jump to the [Installation](#installation).
 
 #### [13-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/fc9527e31c365bb7add527c1eb06b22d64977c55) Changes
-* Added .First() to attach `devtools` package if installed and running interactively. 
+* Added .First() to attach `devtools` package if installed and running interactively.
 * Attach `devtools` package if installed and interactive.
 * Attach `dgutils` package if installed.
 
@@ -30,6 +34,9 @@ installed.
 #### [7-Nov-2016](https://github.com/dgabbe/rprofile.site/commita3f13423db26f767d7010652e04953af4a69bb8f) Changes
 * `init_wd()` now no longer required before `start_wd()`.
 
+#### [10-Jan-2017](https://github.com/dgabbe/rprofile.site/commit1ce55efc56b63e9c1d0993f2a5ad87a0c0d8bcd3) Changes
+* `.py` files renamed to `.command` so scripts can be doubled clicked or run from the command line.
+
 ### Installation
 
 Follow these steps to install:
@@ -38,16 +45,20 @@ mkdir ~/rprofile.site
 cd ~/rprofile.site
 git init
 git clone https://github.com/dgabbe/rprofile.site.git
-./make_r_sym_links.py
 ```
+To complete the configuration, continue using the command line with this command
+```
+./make_r_sym_links.command
+```
+or return to the Finder and double click on `make_r_sym_links.command`.
 
-If there is an existing `Rprofile.site`, it is renamed to `Rprofile.site.org`. Now edit `Rprofile.site` to make sure it has the options set to your preferences.  Startup R or RStudio to verify a message like the one below is displayed:
+If there is an existing `Rprofile.site`, it is renamed to `Rprofile.site.org`. Now edit `Rprofile.site` to make sure it has the options set to your preferences.  Repeat for `.Renviron`.  Startup R or RStudio to verify a message like the one below is displayed:
 ```
 23-Oct-2016 ~/Rprofile.site .First() starting...
 
-    Option StringsAsFactors:   FALSE 
-    Option download.file.method:   libcurl 
-    Option repos:   https://cran.rstudio.com/ 
+    Option StringsAsFactors:   FALSE
+    Option download.file.method:   libcurl
+    Option repos:   https://cran.rstudio.com/
     Option defaultPackages: datasets, utils, grDevices, graphics, stats,
         methods
 
@@ -57,18 +68,17 @@ If there is an existing `Rprofile.site`, it is renamed to `Rprofile.site.org`. N
 If you want to remove this setup:
 
 ```
-cd ~
-./rprofile.site/rm_r_sym_links.py
-mv Rprofile.site.org Rprofile.site # only if you had one before 
+~/rprofile.site/rm_r_sym_links.command
+mv Rprofile.site.org Rprofile.site # only if you had one before
 ```
 
 ### Use .First() or Packages to Customize
 
-There are plenty of examples of `.Rprofile` or `Rprofile.site` that 
-include functions or more generically, R objects.  At first, I thought this was 
+There are plenty of examples of `.Rprofile` or `Rprofile.site` that
+include functions or more generically, R objects.  At first, I thought this was
 a great idea, but I have found better ways.  Here are some points to keep in mind:
 
-1. When `Rprofile.site` is executed, any objects are created 
+1. When `Rprofile.site` is executed, any objects are created
 in the `base` environment unless coded otherwise.
 2. Storing the objects in `.GlobalEnv` (RStudio's Environment tab displays
 `Global Environment`) avoids modifying `base`, but your changes are not
@@ -77,10 +87,10 @@ examples work around this behavior by creating a hidden environment and then
 adding their objects to it.  However, RStudio's *delete all saved objects*
 (![broom](./broom.png)) default is to include hidden objects.
 3. Don't assume your R session is initialized only
-once.  R and RStudio have slightly different behaviors.  RStudio's 
+once.  R and RStudio have slightly different behaviors.  RStudio's
 *Session->Restart R* does not clear out the Global Environment, but does run the
-R [initialization 
-process](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html). 
+R [initialization
+process](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html).
 The `devtools::` functions do as well.
 
 The idiom `option("defaultPackages" =
@@ -95,7 +105,7 @@ If you still want default packages loaded, try this:
   suppressMessages(require("package2", quietly = TRUE))
 }
 ```
-If you use `library()`, instead of `require()`, any error will stop the initialization 
+If you use `library()`, instead of `require()`, any error will stop the initialization
 process.  It should take more than a missing package to bring the initialization
 to a halt.
 
@@ -104,7 +114,7 @@ a better R programer, your code will have fewer collisions with other R code,
 and RStudio's deployment features will manage the packages needed.
 
 Remember, loading is different from attaching packages.  Once a package is
-*installed*, `install.packages()`, its functions can be called with 
+*installed*, `install.packages()`, its functions can be called with
 `package::function()` syntax.  The `library` function will attach the package to
 the current evironment and make it part of the namespaces that are searched.
 
