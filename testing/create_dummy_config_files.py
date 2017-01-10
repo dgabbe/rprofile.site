@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 #
 # Create dummy files for testing install
-# Run after rm_r_sym_links.py
+# Run after rm_r_sym_links.command
 #
 
 import os
@@ -13,8 +13,10 @@ home = os.environ["HOME"]
 config_files = (
 	{"home": os.path.join(home, ".Renviron"), "repo": "dot-Renviron"},
 	{"home": os.path.join(home, "Rprofile.site"), "repo": "Rprofile.site"},
+	{"home": os.path.join(home, ".Renviron.org")},
+	{"home": os.path.join(home, "Rprofile.site.org")}
 	)
-	
+
 for f in config_files:
 	open(f["home"], 'a').close()
 
