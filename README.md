@@ -120,4 +120,4 @@ the current environment and make it part of the namespaces that are searched.
 
 ### More on OS X Setup Details
 
-Probably under the heading of TL;DC are the [notes](http://blog.frame38.com/rprofile.site/) I kept as I built out an R development environment on Yosemite, OS X 10.10.x and continuing on OS X 10.11, El Capitan.  They will be edited as soon as I straighten out some brew issues.
+Probably under the heading of TL;DC are the [notes](http://blog.frame38.com/os-x-configuration-notes.html) I kept as I built out an R development environment on Yosemite, OS X 10.10.x and continuing on OS X 10.11, El Capitan.  They will be edited as soon as I straighten out some brew issues.
