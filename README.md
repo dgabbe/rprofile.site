@@ -15,12 +15,13 @@ To save disk space and prevent reinstalling libraries when a new version of R is
 
 Jump to the [Installation](#installation).
 
-#### [13-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/fc9527e31c365bb7add527c1eb06b22d64977c55) Changes
-* Added .First() to attach `devtools` package if installed and running interactively.
-* Attach `devtools` package if installed and interactive.
-* Attach `dgutils` package if installed.
+#### [10-Jan-2017](https://github.com/dgabbe/rprofile.site/tree/2017-01-10) Changes
+* `.py` files renamed to `.command` so scripts can be doubled clicked or run from the command line.
 
-#### [25-Oct-2016](https://github.com/dgabbe/rprofile.site/commit/c57cadcb14c5ec8eeecb0664fa2c304687860790) Changes
+#### [7-Nov-2016](https://github.com/dgabbe/rprofile.site/tree/2016-11-07) Changes
+* `init_wd()` now no longer required before `start_wd()`.
+
+#### [25-Oct-2016](https://github.com/dgabbe/rprofile.site/tree/2016-10-25) Changes
 * This release represents a refactoring of the code.  The use of `local()`,
 suggests that R's lexical scoping rules are being twisted and bent.  The purpose
 is to prevent the `base` environment from being modified, but that's `.First`'s
@@ -31,11 +32,10 @@ purpose.  All code moved into `.First`.
 really shouldn't be cluttering up an initialization file.  Started if it's
 installed.
 
-#### [7-Nov-2016](https://github.com/dgabbe/rprofile.site/commita3f13423db26f767d7010652e04953af4a69bb8f) Changes
-* `init_wd()` now no longer required before `start_wd()`.
-
-#### [10-Jan-2017](https://github.com/dgabbe/rprofile.site/commit1ce55efc56b63e9c1d0993f2a5ad87a0c0d8bcd3) Changes
-* `.py` files renamed to `.command` so scripts can be doubled clicked or run from the command line.
+#### [13-Oct-2016](https://github.com/dgabbe/rprofile.site/tree/2016-10-13) Changes
+* Added .First() to attach `devtools` package if installed and running interactively.
+* Attach `devtools` package if installed and interactive.
+* Attach `dgutils` package if installed.
 
 ### Installation
 
@@ -44,7 +44,7 @@ Follow these steps to install:
 mkdir ~/rprofile.site
 cd ~/rprofile.site
 git init
-git clone https://github.com/dgabbe/rprofile.site.git
+git clone https://github.com/dgabbe/rprofile.site.git --branch Current
 ```
 To complete the configuration, continue using the command line with this command
 ```
