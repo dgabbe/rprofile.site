@@ -28,7 +28,10 @@
 # References: http://yihui.name/en/2014/07/library-vs-require/
 #
 .First <- function() {
-  message_prefix <- paste(format(Sys.Date(), format = "%d-%b-%Y"), " ", Sys.getenv("R_PROFILE"))
+  message_prefix <- paste(
+    format(Sys.Date(), format = "%d-%b-%Y"),
+    " ", Sys.getenv("R_PROFILE")
+  )
   if (interactive()) { message(message_prefix, " .First() starting...\n") }
 
   #
@@ -49,10 +52,14 @@
   # R and RStudio can have different settings for CRAN https connections.
   # Explicitly set to HTTPS.
   #
-  # References: https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
+  # References:
+  #  https://support.rstudio.com/hc/en-us/articles/206827897-Secure-Package-Downloads-for-R
   #
-  if (.Platform$OS.type == "unix") { options(download.file.method = "libcurl")
-  } else { options(download.file.method = "wininet") }
+  if (.Platform$OS.type == "unix") {
+    options(download.file.method = "libcurl")
+  } else {
+    options(download.file.method = "wininet")
+  }
 
   #
   # R's completion generator
@@ -66,24 +73,27 @@
   #
   # Load commonly used packages
   #
-  if (interactive()) {
-    suppressMessages(require("devtools", quietly = TRUE))
-  }
+  suppressWarnings(
+    suppressMessages({
+      require("devtools", quietly = TRUE)
+      require("dgutils", quietly = TRUE)
+    })
+  )
 
-  #
-  # wdprompt::stop_wd() if you want to turn off the prompt.
-  #
-  if ( length(find.package("wdprompt", quiet = TRUE)) != 0 ) {
-    wdprompt::start_wd()
-  }
-  suppressMessages(require("dgutils", quietly = TRUE))
-
-  #
-  # Options summary
-  #
   if (interactive()) {
+    #
+    # wdprompt::stop_wd() if you want to turn off the prompt.
+    #
+    if (length(find.package("wdprompt", quiet = TRUE)) > 0 ) {
+      wdprompt::start_wd()
+    }
+
+    #
+    # Options summary
+    #
     lapply(
-      list("stringsAsFactors", "download.file.method", "repos", "defaultPackages"),
+      list("stringsAsFactors", "download.file.method", "repos",
+           "defaultPackages"),
       function(o) {
         message(
           strwrap(
@@ -100,6 +110,6 @@
 
     message("\n", message_prefix, " .First() finished...\n")
   }
-}
+} # .First
 
 

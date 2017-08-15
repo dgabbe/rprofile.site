@@ -4,7 +4,24 @@
 # It's purpose is to define environment variables for R in a platform
 # independent way.
 #
-# R's startup process is documented at https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html
+# R's startup process is documented at
+# https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html
 #
+
 R_PROFILE=~/Rprofile.site
+
+#
+# Minor revision upgrades frequently cause loading errors similar to:
+# 1: dyn.load(file, DLLpath = DLLpath, ...)
+# 2: library.dynam(lib, package, package.lib)
+#
+# Experience has shown that packages loaded in .First() trip this error.
+# R commands helpful for diagnosing:
+#    .libPaths()
+#    .Library
+#    Sys.getenv("R_LIBS_USER")
+#    sessionInfo()
+#    readRenviron(path)
+# Also see https://shiny.rstudio.com/articles/upgrade-R.html
+#
 R_LIBS_USER=~/Library/R/3.x/library/

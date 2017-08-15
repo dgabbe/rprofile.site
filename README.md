@@ -8,12 +8,62 @@ easily maintain the same environment across multiple computers. The user
 profile, `.Rprofile`, is left available to use in your `$HOME` directory or your
 project's working directory.
 
-Review and edit `.First()` in `Rprofile.site` and `.Renviron` to set R's options to your
+Review and edit `.First()` in `Rprofile.site` and `dot-Renviron` to set R's options to your
 preferences.
 
-To save disk space and prevent reinstalling libraries when a new version of R is installed, the major versions use the same library, i.e.`~/Library/R/3.x/library/`, which is defined by `R_LIBS_USER`.
+To save disk space and prevent reinstalling libraries when a new version of R is installed, 
+the major versions use the same library, i.e.`~/Library/R/3.x/library/`, which is defined by `R_LIBS_USER`.
 
 Jump to the [Installation](#installation).
+
+### Diagnoising & Correcting Errors From Minor R Release Updates
+
+Keeping a common library across the same major verison of R can create some
+mischief when you install a minor update. For example 3.3 to 3.4.0.  The error
+I end up fixing is about loading and the first 2 lines are similar to:
+```
+1: dyn.load(file, DLLpath = DLLpath, ...)
+2: library.dynam(lib, package, package.lib)
+```
+
+#### RStudio Hangs With A Blank Screen On Startup
+It's a bit vexing when RStudio hangs on startup with a blank screen.  It's not
+the fault of RStudio, but almost always of `.First()` loading `devtools`. Run R, 
+which on a Mac is `/Applications/R.app`, to see the error.
+
+#### Code Throws An Error About Loading
+RStudio runs, but your code errors out with a stack trace indicating a loading 
+problem.  If you updated R while RStudio was running, try quitting and restarting 
+RStudio.  Continue reading if the error still occurs.
+
+#### How to Fix
+The load errors happen because your R library, pointed to by `R_LIBS_USER`, has 
+packages installed which were built with an earlier version of R. When a new version
+of R is installed, it's internals are newer and the version skew may 
+be causing the error.
+
+If RStudio hung, run R to find which package caused the error and move the 
+offending package folder out of `R_LIBS_USER`.  Repeat until RStudio starts.  
+
+Run `.libPaths()` to verify your library path is as intended.  If R created `~/Library/R/3.4/library`,
+delete it now. Now copy the package folder back.  Run `update.packages(ask = FALSE, checkBuilt = TRUE)`.
+Quit RStudio, then restart it to confirm the error is fixed.  More details can be found 
+in this excellent post, https://shiny.rstudio.com/articles/upgrade-R.html.
+
+Other commands that are helpful:
+
+* `.Library`
+* `Sys.getenv("R_LIBS_USER")`
+* `sessionInfo()`
+* `readRenviron(path)`
+
+Jump to the [Installation](#installation).
+
+#### [15-Aug-2017](https://github.com/dgabbe/rprofile.site/tree/2017-08-15) Changes
+* Packages attached w/`require` now generate no message if the package is not installed
+to make R initialization as quiet as possible for non-critcal pieces. 
+* Added a section on fixing errors after an R minor release upgrade.  Yeah, 
+monkeys do fall out of trees.
 
 #### [10-Jan-2017](https://github.com/dgabbe/rprofile.site/tree/2017-01-10) Changes
 * `.py` files renamed to `.command` so scripts can be doubled clicked or run from the command line.
