@@ -58,6 +58,11 @@ Other commands that are helpful:
 * `readRenviron(path)`
 
 Jump to the [Installation](#installation).
+#### [18-Aug-2017](https://github.com/dgabbe/rprofile.site/tree/2017-08-18) Changes
+* Added Shiny options to speed development:
+** `shiny.launch.browser = TRUE`
+** `shiny.autoreload = TRUE`
+** `shiny.autoreload.interval = 2000 # in milliseconds`
 
 #### [15-Aug-2017](https://github.com/dgabbe/rprofile.site/tree/2017-08-15) Changes
 * Packages attached w/`require` now generate no message if the package is not installed

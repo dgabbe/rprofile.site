@@ -44,8 +44,11 @@
     stringsAsFactors = FALSE, # Correct for now, wonder if/when it will bite me.
     repos = c(CRAN = "https://cran.rstudio.com/"), # Specify HTTPS connection!
     formatR.indent = 2,
-    browserNLdisabled = TRUE # ignore newlines when browse()ing - Hadley tip
+    browserNLdisabled = TRUE, # ignore newlines when browse()ing - Hadley tip
     ##  deparse.max.lines = 2 # give minimal output from traceback() - Hadley tip
+    shiny.launch.browser = TRUE,
+    shiny.autoreload = TRUE,
+    shiny.autoreload.interval = 2000 # in milliseconds
   )
 
   #
@@ -92,8 +95,10 @@
     # Options summary
     #
     lapply(
-      list("stringsAsFactors", "download.file.method", "repos",
-           "defaultPackages"),
+      list(
+        "stringsAsFactors", "download.file.method", "repos", "defaultPackages",
+        "shiny.launch.browser", "shiny.autoreload", "shiny.autoreload.interval"
+      ),
       function(o) {
         message(
           strwrap(
