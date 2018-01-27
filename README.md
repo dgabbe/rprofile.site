@@ -58,6 +58,10 @@ Other commands that are helpful:
 * `readRenviron(path)`
 
 Jump to the [Installation](#installation).
+#### [27-Jan-2018](https://github.com/dgabbe/rprofile.site/tree/2018-01-27) Changes
+* Added `usethis` to packages added for interactive sessions
+* Moved `devtools` and `dgutils` under interactive sessions
+
 #### [18-Aug-2017](https://github.com/dgabbe/rprofile.site/tree/2017-08-18) Changes
 * Added Shiny options to speed development:
 ** `shiny.launch.browser = TRUE`

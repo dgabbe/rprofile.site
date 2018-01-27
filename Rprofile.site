@@ -74,17 +74,17 @@
     data = TRUE    # Enable tab completion for data sets inside utils::data()
   )
 
-  #
-  # Load commonly used packages
-  #
-  suppressWarnings(
-    suppressMessages({
-      require("devtools", quietly = TRUE)
-      require("dgutils", quietly = TRUE)
-    })
-  )
-
   if (interactive()) {
+    #
+    # Load commonly used packages
+    #
+    suppressWarnings(
+      suppressMessages({
+        require("devtools", quietly = TRUE)
+        require("dgutils", quietly = TRUE)
+        require("usethis", quietly = TRUE)
+      })
+    )
     #
     # wdprompt::stop_wd() if you want to turn off the prompt.
     #
