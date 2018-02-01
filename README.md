@@ -14,7 +14,7 @@ preferences.
 To save disk space and prevent reinstalling libraries when a new version of R is installed, 
 the major versions use the same library, i.e.`~/Library/R/3.x/library/`, which is defined by `R_LIBS_USER`.
 
-Jump to the [Installation](#installation). Jump to [Release Notes](#release_notes).
+Jump to the [Installation](#installation). Jump to [Release Notes](#release-notes).
 
 ### Diagnoising & Correcting Errors From Minor R Release Updates
 
@@ -59,7 +59,7 @@ Other commands that are helpful:
 
 Jump to the [Installation](#installation).
 
-### Release Notes {#release_notes}
+### Release Notes
 
 #### [27-Jan-2018](https://github.com/dgabbe/rprofile.site/tree/2018-01-27) Changes
 * Added `usethis` to packages added for interactive sessions
