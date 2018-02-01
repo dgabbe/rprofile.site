@@ -59,7 +59,7 @@ Other commands that are helpful:
 
 Jump to the [Installation](#installation).
 
-### Release Notes {#release_notes}
+### Release Notes(#release_notes)
 
 #### [27-Jan-2018](https://github.com/dgabbe/rprofile.site/tree/2018-01-27) Changes
 * Added `usethis` to packages added for interactive sessions
