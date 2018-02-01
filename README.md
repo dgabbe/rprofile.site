@@ -14,7 +14,7 @@ preferences.
 To save disk space and prevent reinstalling libraries when a new version of R is installed, 
 the major versions use the same library, i.e.`~/Library/R/3.x/library/`, which is defined by `R_LIBS_USER`.
 
-Jump to the [Installation](#installation).
+Jump to the [Installation](#installation). Jump to [Release Notes](#release_notes).
 
 ### Diagnoising & Correcting Errors From Minor R Release Updates
 
@@ -58,15 +58,18 @@ Other commands that are helpful:
 * `readRenviron(path)`
 
 Jump to the [Installation](#installation).
+
+### Release Notes {#release_notes}
+
 #### [27-Jan-2018](https://github.com/dgabbe/rprofile.site/tree/2018-01-27) Changes
 * Added `usethis` to packages added for interactive sessions
 * Moved `devtools` and `dgutils` under interactive sessions
 
 #### [18-Aug-2017](https://github.com/dgabbe/rprofile.site/tree/2017-08-18) Changes
 * Added Shiny options to speed development:
-** `shiny.launch.browser = TRUE`
-** `shiny.autoreload = TRUE`
-** `shiny.autoreload.interval = 2000 # in milliseconds`
+    + `shiny.launch.browser = TRUE`
+    + `shiny.autoreload = TRUE`
+    + `shiny.autoreload.interval = 2000 # in milliseconds`
 
 #### [15-Aug-2017](https://github.com/dgabbe/rprofile.site/tree/2017-08-15) Changes
 * Packages attached w/`require` now generate no message if the package is not installed
