@@ -61,6 +61,10 @@ Jump to the [Installation](#installation).
 
 ### Release Notes
 
+#### [4-Feb-2018](https://github.com/dgabbe/rprofile.site/tree/2018-02-04) Changes
+* Added `desc` to packages added for interactive sessions
+* `usethis` loaded after `devtools`
+
 #### [27-Jan-2018](https://github.com/dgabbe/rprofile.site/tree/2018-01-27) Changes
 * Added `usethis` to packages added for interactive sessions
 * Moved `devtools` and `dgutils` under interactive sessions
