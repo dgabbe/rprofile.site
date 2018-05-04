@@ -14,25 +14,27 @@ import sys
 
 
 def log_config(home = os.environ["HOME"]):
-  #
-  # Unique name by machine and user.
-  # OS X: ~/Library/Logs/<machine-name>_<username>.log
-  #
-  machine_user = str.split(platform.uname()[1], ".local")[0] \
-    + "_" + getpass.getuser()
-  log_file_path = os.path.join(home, "Library/Logs/")
-  if not os.path.isdir(log_file_path):
-    log_file_path = home
+    """Unique name by machine and user.
+    OS X: ~/Library/Logs/<machine-name>_<username>.log
 
-  l_file = log_file_path + machine_user + ".log"
+    :param home:
+    :return: log file name
+    """
+    machine_user = str.split(platform.uname()[1], ".local")[0] \
+        + "_" + os.getlogin()
+    log_file_path = os.path.join(home, "Library/Logs/")
+    if not os.path.isdir(log_file_path):
+        log_file_path = home
 
-  logging.basicConfig(
-    filename = l_file,
-    format = '%(asctime)s %(filename)s %(levelname)s: %(message)s',
-    datefmt = '%m/%d/%Y %H:%M:%S',
-    level = logging.INFO
+    l_file = log_file_path + machine_user + ".log"
+
+    logging.basicConfig(
+      filename=l_file,
+      format='%(asctime)s %(filename)s %(levelname)s: %(message)s',
+      datefmt='%m/%d/%Y %H:%M:%S',
+      level=logging.INFO
     )
-  return l_file
+    return l_file
 
 def log_start():
   logging.info(repo_dir + ": Start")
@@ -67,9 +69,9 @@ changes_made = False
 #
 log_start()
 
-if os.path.isfile(repo_dir + "/install_list.py"):
+try:
   import install_list
-else:
+except:
   log_error("install_list.py not found!")
   log_end(log_file)
   sys.exit(1)
