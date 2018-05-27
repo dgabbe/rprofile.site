@@ -7,8 +7,8 @@
 # R's startup process is documented at
 # https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html
 #
-
 R_PROFILE=~/Rprofile.site
+
 
 #
 # Minor revision upgrades frequently cause loading errors similar to:
@@ -25,3 +25,18 @@ R_PROFILE=~/Rprofile.site
 # Also see https://shiny.rstudio.com/articles/upgrade-R.html
 #
 R_LIBS_USER=~/Library/R/3.x/library/
+
+
+#
+# Fix problem w/RStudio's included version of pandoc erroring out creating an
+# HTML preview for Readme.md files.  Need pandoc v2.2.1.
+#
+# R commands helpful for diagnosing:
+#     rmarkdown::pandoc_version()
+#     packageVersion("rmarkdown")
+#     Sys.getenv("RSTUDIO_PANDOC")
+#     sessionInfo()
+# Best summary: https://github.com/r-lib/usethis/issues/195
+#
+RSTUDIO_PANDOC=/usr/local/bin/pandoc:/Applications/RStudio.app/Contents/MacOS/pandoc
+
