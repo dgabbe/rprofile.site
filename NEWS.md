@@ -1,4 +1,6 @@
-### Release Notes
+---
+title: Release Notes
+---
 
 #### [4-Feb-2018](https://github.com/dgabbe/rprofile.site/tree/2018-02-04) Changes
 * Added `desc` to packages added for interactive sessions
