@@ -1,3 +1,6 @@
+---
+image: rprofile.site-hexagon-linkedin.png
+---
 
 ## rprofile.site <img src="./logo.png" align="right" width=125 />
 
@@ -21,7 +24,7 @@ of R is installed, the major versions use the same library,
 i.e.`~/Library/R/3.x/library/`, which is defined by `R_LIBS_USER`.
 
 Jump to the [Installation](#installation). Read [Release
-Notes](./NEWS.md).
+Notes](NEWS.md).
 
 ### Diagnosing & Correcting Errors From Minor R Release Updates
 
