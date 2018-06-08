@@ -1,5 +1,12 @@
 ---
-output: github_document
+title: NULL
+output: 
+  html_document:
+    theme: NULL
+    includes:
+      in_header: "header.html"
+  github_document:
+    default
 ---
 
 ## rprofile.site <img src="./logo.png" align="right" width=125 />
@@ -22,7 +29,7 @@ To save disk space and prevent reinstalling libraries when a new version of R is
 the major versions use the same library, i.e.`~/Library/R/3.x/library/`, which is defined 
 by `R_LIBS_USER`.
 
-Jump to the [Installation](#installation). Read [Release Notes](./NEWS.md).
+Jump to the [Installation](#installation). Read [Release Notes](NEWS.md).
 
 ### Diagnosing & Correcting Errors From Minor R Release Updates
 
@@ -76,9 +83,9 @@ git clone https://github.com/dgabbe/rprofile.site.git --branch Current
 ```
 To complete the configuration, continue using the command line with this command
 ```
-./make_r_sym_links.command
+./installer.command
 ```
-or return to the Finder and double click on `make_r_sym_links.command`.
+or return to the Finder and double click on `installer.command`.
 
 If there is an existing `Rprofile.site`, it is renamed to `Rprofile.site.org`. 
 Now edit `Rprofile.site` to make sure it has the options set to your preferences.  
@@ -98,7 +105,7 @@ Repeat for `.Renviron`.  Startup R or RStudio to verify a message like the one b
 If you want to remove this setup:
 
 ```
-~/rprofile.site/rm_r_sym_links.command
+~/rprofile.site/uninstaller.command
 mv Rprofile.site.org Rprofile.site # only if you had one before
 ```
 

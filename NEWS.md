@@ -2,6 +2,15 @@
 title: Release Notes
 ---
 
+#### [7-Jun-2018](https://github.com/dgabbe/rprofile.site/tree/2018-06-07) Changes
+* Removed `desc` to packages added for interactive sessions because `usethis` layers on top of it.
+* Added `header.html` and `docs/` directory so proper previews for LinkedIn media articles are generated. A GitHub repo landing page
+offers no hooks to change the open graph meta tags.
+* Switched to new Python installer scripts.
+* Added `RSTUDIO_PANDOC=/usr/local/bin/pandoc:/Applications/RStudio.app/Contents/MacOS/pandoc` to `.Renviron` 
+to pandoc erroring out creating an HTML preview for Readme.md files with badges.
+
+
 #### [4-Feb-2018](https://github.com/dgabbe/rprofile.site/tree/2018-02-04) Changes
 * Added `desc` to packages added for interactive sessions
 * `usethis` loaded after `devtools`

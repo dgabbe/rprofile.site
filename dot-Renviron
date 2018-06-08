@@ -28,8 +28,8 @@ R_LIBS_USER=~/Library/R/3.x/library/
 
 
 #
-# Fix problem w/RStudio's included version of pandoc erroring out creating an
-# HTML preview for Readme.md files.  Need pandoc v2.2.1.
+# pandoc v2.2.1 fixes problem w/RStudio's included version of pandoc erroring out creating an
+# HTML preview for Readme.md files.
 #
 # R commands helpful for diagnosing:
 #     rmarkdown::pandoc_version()
