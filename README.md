@@ -1,6 +1,3 @@
----
-image: rprofile.site-hexagon-linkedin.png
----
 
 ## rprofile.site <img src="./logo.png" align="right" width=125 />
 
@@ -87,9 +84,9 @@ Follow these steps to install:
 To complete the configuration, continue using the command line with this
 command
 
-    ./make_r_sym_links.command
+    ./installer.command
 
-or return to the Finder and double click on `make_r_sym_links.command`.
+or return to the Finder and double click on `installer.command`.
 
 If there is an existing `Rprofile.site`, it is renamed to
 `Rprofile.site.org`. Now edit `Rprofile.site` to make sure it has the
@@ -109,7 +106,7 @@ the one below is displayed:
 
 If you want to remove this setup:
 
-    ~/rprofile.site/rm_r_sym_links.command
+    ~/rprofile.site/uninstaller.command
     mv Rprofile.site.org Rprofile.site # only if you had one before
 
 ### Use .First() or Packages to Customize

@@ -80,7 +80,6 @@
     #
     suppressWarnings(
       suppressMessages({
-        require("desc", quietly = TRUE)
         require("devtools", quietly = TRUE)
         require("usethis", quietly = TRUE) # must load after devtools
         require("dgutils", quietly = TRUE) # should load last
