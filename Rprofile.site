@@ -97,9 +97,9 @@
     #
     lapply(
       list(
-        "stringsAsFactors", "download.file.method", "repos", "defaultPackages",
-        "tibble.width",
-        "shiny.launch.browser", "shiny.autoreload", "shiny.autoreload.interval"
+        "defaultPackages", "download.file.method", "repos",
+        "shiny.autoreload", "shiny.autoreload.interval", "shiny.launch.browser",
+        "stringsAsFactors", "tibble.width"
       ),
       function(o) {
         message(

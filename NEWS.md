@@ -2,6 +2,9 @@
 title: Release Notes
 ---
 
+#### [29-Jun-2018](https://github.com/dgabbe/rprofile.site/tree/2018-06-29) Changes
+* Alphabetized list of options displayed.
+
 #### [7-Jun-2018](https://github.com/dgabbe/rprofile.site/tree/2018-06-07) Changes
 * Removed `desc` to packages added for interactive sessions because `usethis` layers on top of it.
 * Added `header.html` and `docs/` directory so proper previews for LinkedIn media articles are generated. A GitHub repo landing page
