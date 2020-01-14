@@ -93,6 +93,17 @@
     }
 
     #
+    # Change the size of the default on-screen plot. The default is 7 inches.
+    # Reference: https://stackoverflow.com/questions/33199676/how-to-change-the-plot-window-size-at-r-permanently
+    #
+    if (interactive() & Sys.info()["sysname"] == "Darwin") {
+      # Mac specific code
+      setHook(packageEvent("grDevices", "onLoad"),
+              function(...)
+                grDevices::quartz.options(width = 6, height = 6))
+    }
+
+    #
     # Options summary
     #
     lapply(
@@ -106,7 +117,7 @@
           strwrap(
             toString(getOption(o)),
             width = 80,
-            initial = paste("    Option ", o, ":  ", sep = ""),
+            initial = paste0("    Option ", o, ":  "),
             prefix = "\n",
             indent = 0,
             exdent = nchar("        ")
