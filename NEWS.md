@@ -2,6 +2,9 @@
 title: Release Notes
 ---
 
+#### [14-Mar-2022](https://github.com/dgabbe/rprofile.site/tree/2022-03-14) Changes
+* `R_LIBS_USER` now points to 4.x directory to support 4.x versions in `dot-Renviron`.
+
 #### [29-Jun-2018](https://github.com/dgabbe/rprofile.site/tree/2018-06-29) Changes
 * Alphabetized list of options displayed.
 
