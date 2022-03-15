@@ -24,7 +24,8 @@ R_PROFILE=~/Rprofile.site
 #    readRenviron(path)
 # Also see https://shiny.rstudio.com/articles/upgrade-R.html
 #
-R_LIBS_USER=~/Library/R/3.x/library/
+# R_LIBS_USER=~/Library/R/3.x/library/
+R_LIBS_USER=~/Library/R/4.x/library/
 
 
 #
